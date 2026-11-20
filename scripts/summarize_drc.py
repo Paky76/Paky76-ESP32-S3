@@ -17,6 +17,10 @@ print("=== KiCad DRC issue types (preliminary placement study) ===")
 for name,n in counts.most_common():
     print("%-38s %d"%(name,n))
 print("Total parsed issues:",sum(counts.values()))
+with open("preview/drc-summary.csv","w",encoding="utf-8") as report:
+    report.write("issue_type,count\\n")
+    for issue,n in counts.most_common():
+        report.write(f"{issue},{n}\\n")
 for critical in ("shorting_items","shorting_tracks","track_dangling","clearance"):
     print("DRC %-32s %d"%(critical,counts[critical]))
 if counts["shorting_items"] or counts["shorting_tracks"]:
