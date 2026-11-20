@@ -1,0 +1,9 @@
+Net,ESP32-S3 GPIO,Display signal,Status
+LCD_MOSI,11,DIN,Provisional
+LCD_SCLK,12,CLK,Provisional
+LCD_CS,10,CS,Provisional
+LCD_DC,9,DC,Provisional
+LCD_RST,8,RST,Provisional
+LCD_BL,7,BL,Requires backlight electrical verification
+USB_DN,19,,Native USB
+USB_DP,20,,Native USB
