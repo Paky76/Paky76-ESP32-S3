@@ -4,6 +4,7 @@ on:
     paths:
       - 'scripts/generate_placement_study.py'
       - 'scripts/check_placement_geometry.py'
+      - 'scripts/export_footprint_padmap.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -21,6 +22,8 @@ jobs:
         run: /usr/bin/python3 scripts/generate_placement_study.py
       - name: Check physical footprint envelopes
         run: /usr/bin/python3 scripts/check_placement_geometry.py
+      - name: Export real footprint pad coordinates
+        run: /usr/bin/python3 scripts/export_footprint_padmap.py
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
@@ -33,4 +36,5 @@ jobs:
           path: |
             hardware/Paky76-RevA-placement-study.kicad_pcb
             preview/
+            hardware/generated-footprint-padmap.csv
           if-no-files-found: ignore
