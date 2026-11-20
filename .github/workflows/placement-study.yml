@@ -10,6 +10,7 @@ on:
       - 'scripts/check_esp_usb_pad_nets.py'
       - 'scripts/check_lcd_gpio_nets.py'
       - 'scripts/check_boot_en_nets.py'
+      - 'scripts/check_routed_segments.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -37,6 +38,8 @@ jobs:
         run: /usr/bin/python3 scripts/check_lcd_gpio_nets.py
       - name: Validate EN and BOOT pad nets
         run: /usr/bin/python3 scripts/check_boot_en_nets.py
+      - name: Audit physical copper tracks
+        run: /usr/bin/python3 scripts/check_routed_segments.py
       - name: Export real footprint pad coordinates
         run: /usr/bin/python3 scripts/export_footprint_padmap.py
       - name: Export preliminary DRC report (advisory, expected incomplete design)
