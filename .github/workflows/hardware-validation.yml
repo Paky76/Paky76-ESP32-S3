@@ -2,32 +2,44 @@ name: KiCad hardware validation
 on:
   push:
     paths:
-      - 'hardware/Paky76-RevA.kicad_sch'
-      - 'hardware/Paky76-RevA.kicad_pcb'
+      - 'hardware/Paky76-RevA*.kicad_sch'
+      - 'hardware/Paky76-RevA*.kicad_pcb'
+      - 'hardware/Paky76-RevA*.kicad_pro'
+      - 'hardware/**/*.kicad_mod'
+      - 'hardware/fp-lib-table'
       - '.github/workflows/hardware-validation.yml'
   pull_request:
   workflow_dispatch:
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Install KiCad CLI
         run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-9.0-releases
           sudo apt-get update
-          sudo apt-get install -y kicad
+          sudo apt-get install -y --no-install-recommends kicad kicad-symbols kicad-footprints
           kicad-cli version
-      - name: Require real CAD sources
+          mkdir -p "$HOME/.config/kicad/9.0"
+          cp /usr/share/kicad/template/{sym-lib-table,fp-lib-table} "$HOME/.config/kicad/9.0/"
+      - name: Select Rev.A CAD
         run: |
-          test -s hardware/Paky76-RevA.kicad_sch
-          test -s hardware/Paky76-RevA.kicad_pcb
+          cad=hardware/Paky76-RevA
+          if [[ ! -e "$cad.kicad_sch" && ! -e "$cad.kicad_pcb" ]]; then
+            cad=hardware/Paky76-RevA-engineering
+          fi
+          test -s "$cad.kicad_sch"
+          test -s "$cad.kicad_pcb"
+          echo "Validating $cad"
+          echo "CAD=$cad" >> "$GITHUB_ENV"
       - name: ERC
         run: |
           mkdir -p reports
-          kicad-cli sch erc --exit-code-violations -o reports/erc.txt hardware/Paky76-RevA.kicad_sch
-      - name: DRC
+          kicad-cli sch erc --exit-code-violations -o reports/erc.txt "$CAD.kicad_sch"
+      - name: DRC and schematic parity
         run: |
-          kicad-cli pcb drc --schematic-parity --exit-code-violations -o reports/drc.txt hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb drc --schematic-parity --exit-code-violations -o reports/drc.txt "$CAD.kicad_pcb"
       - name: Upload validation reports
         if: always()
         uses: actions/upload-artifact@v4

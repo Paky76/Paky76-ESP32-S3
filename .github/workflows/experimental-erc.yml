@@ -1,20 +1,19 @@
 name: Experimental KiCad schematic ERC
 on:
-  push:
-    paths:
-      - 'hardware/*.kicad_sch'
-      - '.github/workflows/experimental-erc.yml'
   workflow_dispatch:
 jobs:
   erc:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Install KiCad CLI
         run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-9.0-releases
           sudo apt-get update
-          sudo apt-get install -y kicad
+          sudo apt-get install -y --no-install-recommends kicad kicad-symbols kicad-footprints
           kicad-cli version
+          mkdir -p "$HOME/.config/kicad/9.0"
+          cp /usr/share/kicad/template/{sym-lib-table,fp-lib-table} "$HOME/.config/kicad/9.0/"
       - name: ERC for actual experimental schematic sources
         shell: bash
         run: |

@@ -2,19 +2,22 @@ name: Build manufacturing package (gated)
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - 'release/engineering-approval.txt'
-      - '.github/workflows/manufacturing.yml'
 jobs:
   fabrication:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Install KiCad
         run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-9.0-releases
           sudo apt-get update
-          sudo apt-get install -y kicad
+          sudo apt-get install -y --no-install-recommends kicad kicad-symbols kicad-footprints
           kicad-cli version
+          mkdir -p "$HOME/.config/kicad/9.0"
+          cp /usr/share/kicad/template/{sym-lib-table,fp-lib-table} "$HOME/.config/kicad/9.0/"
       - name: Require actual approved source files
         run: |
           test -s hardware/Paky76-RevA.kicad_sch
@@ -31,10 +34,10 @@ jobs:
       - name: Export fabrication outputs
         run: |
           mkdir -p manufacturing/gerber manufacturing/drill manufacturing/assembly
-          kicad-cli pcb export gerbers -l F.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,F.Paste,B.Paste,Edge.Cuts -o manufacturing/gerber/ hardware/Paky76-RevA.kicad_pcb
-          kicad-cli pcb export drill -o manufacturing/drill/ hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb export gerbers -l F.Cu,In1.Cu,In2.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,F.Paste,B.Paste,Edge.Cuts -o manufacturing/gerber/ hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb export drill --excellon-separate-th -o manufacturing/drill/ hardware/Paky76-RevA.kicad_pcb
           kicad-cli pcb export pos --format csv --units mm -o manufacturing/assembly/positions.csv hardware/Paky76-RevA.kicad_pcb
-          kicad-cli sch export bom -o manufacturing/assembly/bom.csv hardware/Paky76-RevA.kicad_sch
+          cp release/approved-bom.csv manufacturing/assembly/bom.csv
       - name: Upload manufacturing outputs
         uses: actions/upload-artifact@v4
         with:
