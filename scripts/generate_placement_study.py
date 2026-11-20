@@ -31,7 +31,34 @@ cc1=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC1","5.1k",116,137)
 cc2=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC2","5.1k",119,137)
 bulk=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_BULK","10uF_PLACEHOLDER",132,135)
 dec=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_DECOUPLE","100nF_PLACEHOLDER",135,135)
+# Preliminary USB-C sink pad net assignments on the real KiCad pads.
+# Only these connector pads are mapped. This is NOT a schematic or routed design.
+def net(name):
+    n=pcb.NETINFO_ITEM(board,name)
+    board.Add(n)
+    return n
+def assign(fp,number,network):
+    pads=[p for p in fp.Pads() if p.GetNumber()==number]
+    if not pads:
+        raise RuntimeError("Footprint %s missing required pad %s"%(fp.GetReference(),number))
+    for p in pads: p.SetNet(network)
+gnd=net("GND")
+vbus=net("USB_VBUS_5V")
+cc1net=net("USB_CC1")
+cc2net=net("USB_CC2")
+for number in ("A1","A12","B1","B12"):
+    assign(usb,number,gnd)
+for number in ("A4","A9","B4","B9"):
+    assign(usb,number,vbus)
+assign(usb,"A5",cc1net)
+assign(usb,"B5",cc2net)
+assign(cc1,"1",cc1net)
+assign(cc1,"2",gnd)
+assign(cc2,"1",cc2net)
+assign(cc2,"2",gnd)
+# USB D+/D- and ESP32 pins are deliberately not connected until the schematic
+# and connector symbol/footprint pin-number mapping have been independently reviewed.
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: All footprints are unconnected. No nets, tracks, regulator or electrical schematic. USB and LCD physical compatibility unverified; do not fabricate.")
+print("WARNING: Only USB-C CC/GND/VBUS pad nets are assigned. No tracks, regulator or electrical schematic. USB and LCD physical compatibility unverified; do not fabricate.")
