@@ -34,6 +34,9 @@ dec=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_DECOUPLE","100nF_PLACEH
 reg=add_footprint("Package_TO_SOT_SMD","SOT-23-5","U_REG","AP2112K-3.3TRG1_CANDIDATE",137,140)
 reg_in=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_IN","10uF_CANDIDATE",133,140)
 reg_out=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_OUT","10uF_CANDIDATE",141,140)
+en_pullup=add_footprint("Resistor_SMD","R_0603_1608Metric","R_EN","10k_CANDIDATE",137,130)
+en_cap=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_EN","1uF_CANDIDATE",141,130)
+boot_pullup=add_footprint("Resistor_SMD","R_0603_1608Metric","R_BOOT","10k_CANDIDATE",132,130)
 # Preliminary USB-C sink pad net assignments on the real KiCad pads.
 # Only these connector pads are mapped. This is NOT a schematic or routed design.
 def net(name):
@@ -50,6 +53,8 @@ vbus=net("USB_VBUS_5V")
 cc1net=net("USB_CC1")
 cc2net=net("USB_CC2")
 v33=net("+3V3")
+en=net("ESP_EN")
+boot=net("ESP_GPIO0_BOOT")
 for number in ("A1","A12","B1","B12"):
     assign(usb,number,gnd)
 for number in ("A4","A9","B4","B9"):
@@ -66,6 +71,14 @@ for pin,network in (("1",vbus),("2",gnd),("3",vbus),("5",v33)):
 for capacitor,rail in ((reg_in,vbus),(reg_out,v33),(bulk,vbus),(dec,v33)):
     assign(capacitor,"1",rail)
     assign(capacitor,"2",gnd)
+assign(esp,"3",en)
+assign(esp,"27",boot)
+assign(en_pullup,"1",v33)
+assign(en_pullup,"2",en)
+assign(en_cap,"1",en)
+assign(en_cap,"2",gnd)
+assign(boot_pullup,"1",v33)
+assign(boot_pullup,"2",boot)
 # ESP32-S3-WROOM-1 physical castellated pad mapping (candidate, verify with
 # exact module revision/datasheet before manufacturing).
 # ESP pad 2: 3V3, pad 1: GND, pad 3: EN; USB native D-/D+ pads 13/14.
