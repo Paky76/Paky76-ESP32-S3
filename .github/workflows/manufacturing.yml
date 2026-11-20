@@ -1,0 +1,40 @@
+name: Build manufacturing package (gated)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'hardware/**'
+      - '.github/workflows/manufacturing.yml'
+jobs:
+  fabrication:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install KiCad
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kicad
+          kicad-cli version
+      - name: Require actual source files
+        run: |
+          test -s hardware/Paky76-RevA.kicad_sch
+          test -s hardware/Paky76-RevA.kicad_pcb
+      - name: Electrical and layout checks
+        run: |
+          mkdir -p reports
+          kicad-cli sch erc --exit-code-violations -o reports/erc.txt hardware/Paky76-RevA.kicad_sch
+          kicad-cli pcb drc --schematic-parity --exit-code-violations -o reports/drc.txt hardware/Paky76-RevA.kicad_pcb
+      - name: Export fabrication outputs
+        run: |
+          mkdir -p manufacturing/gerber manufacturing/drill manufacturing/assembly
+          kicad-cli pcb export gerbers -l F.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,F.Paste,B.Paste,Edge.Cuts -o manufacturing/gerber/ hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb export drill -o manufacturing/drill/ hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb export pos --format csv --units mm -o manufacturing/assembly/positions.csv hardware/Paky76-RevA.kicad_pcb
+          kicad-cli sch export bom -o manufacturing/assembly/bom.csv hardware/Paky76-RevA.kicad_sch
+      - name: Upload manufacturing outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: paky76-reva-manufacturing-UNREVIEWED
+          path: |
+            manufacturing/
+            reports/
