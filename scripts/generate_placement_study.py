@@ -28,14 +28,14 @@ esp=add_footprint("RF_Module","ESP32-S3-WROOM-1","U1","ESP32-S3-WROOM-1-N8",124,
 lcd=add_footprint("Connector_PinHeader_2.54mm","PinHeader_1x08_P2.54mm_Vertical","J_LCD","DISPLAY_INTERFACE_STUDY_ONLY",143,116)
 usb=add_footprint("Connector_USB","USB_C_Receptacle_HRO_TYPE-C-31-M-12","J_USB","USB-C_FOOTPRINT_STUDY",125,141)
 cc1=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC1","5.1k",116,137)
-cc2=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC2","5.1k",119,137)
-bulk=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_BULK","10uF_PLACEHOLDER",132,135)
-dec=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_DECOUPLE","100nF_PLACEHOLDER",135,135)
+cc2=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC2","5.1k",113,137)
+bulk=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_BULK","10uF_PLACEHOLDER",128,134)
+dec=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_DECOUPLE","100nF_PLACEHOLDER",135,134)
 reg=add_footprint("Package_TO_SOT_SMD","SOT-23-5","U_REG","AP2112K-3.3TRG1_CANDIDATE",137,140)
 reg_in=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_IN","10uF_CANDIDATE",133,140)
 reg_out=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_OUT","10uF_CANDIDATE",141,140)
 en_pullup=add_footprint("Resistor_SMD","R_0603_1608Metric","R_EN","10k_CANDIDATE",137,130)
-en_cap=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_EN","1uF_CANDIDATE",141,130)
+en_cap=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_EN","1uF_CANDIDATE",137,130)
 boot_pullup=add_footprint("Resistor_SMD","R_0603_1608Metric","R_BOOT","10k_CANDIDATE",132,130)
 # Preliminary USB-C sink pad net assignments on the real KiCad pads.
 # Only these connector pads are mapped. This is NOT a schematic or routed design.
@@ -97,8 +97,9 @@ lcd_signals={"LCD_MOSI":"19","LCD_SCLK":"20","LCD_CS":"18",
              "LCD_DC":"17","LCD_RST":"12","LCD_BL":"7"}
 for signal,pin in lcd_signals.items():
     assign(esp,pin,net(signal))
-# Tie both additional module ground pads to the common ground net.
-for pin in ("40",):
+# Pad 41 is a multi-aperture exposed GND pad (12 small plated holes).
+# assign() deliberately applies the net to ALL pads sharing number 41.
+for pin in ("40","41"):
     assign(esp,pin,gnd)
 # Define copper track helper. USB CC straight segments are UNSAFE and not generated.
 # This is deliberately only a partial routing experiment; clearance/DRC still required.
