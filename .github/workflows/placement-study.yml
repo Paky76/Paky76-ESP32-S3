@@ -21,7 +21,7 @@ jobs:
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
-          kicad-cli pcb export svg -l F.Cu,F.Silkscreen,Edge.Cuts -o preview/ hardware/Paky76-RevA-placement-study.kicad_pcb
+          kicad-cli pcb export svg --mode-multi -l F.Cu,F.Silkscreen,Edge.Cuts -o preview/ hardware/Paky76-RevA-placement-study.kicad_pcb
       - name: Upload editable PCB and preview
         if: always()
         uses: actions/upload-artifact@v4
