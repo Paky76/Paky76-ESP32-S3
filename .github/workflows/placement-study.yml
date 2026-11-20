@@ -5,6 +5,7 @@ on:
       - 'scripts/generate_placement_study.py'
       - 'scripts/check_placement_geometry.py'
       - 'scripts/export_footprint_padmap.py'
+      - 'scripts/check_usb_sink_nets.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -22,6 +23,8 @@ jobs:
         run: /usr/bin/python3 scripts/generate_placement_study.py
       - name: Check physical footprint envelopes
         run: /usr/bin/python3 scripts/check_placement_geometry.py
+      - name: Validate USB-C physical pad net mapping
+        run: /usr/bin/python3 scripts/check_usb_sink_nets.py
       - name: Export real footprint pad coordinates
         run: /usr/bin/python3 scripts/export_footprint_padmap.py
       - name: Export SVG placement preview
