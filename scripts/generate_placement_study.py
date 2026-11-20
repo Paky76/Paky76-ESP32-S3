@@ -98,7 +98,7 @@ lcd_signals={"LCD_MOSI":"19","LCD_SCLK":"20","LCD_CS":"18",
 for signal,pin in lcd_signals.items():
     assign(esp,pin,net(signal))
 # Tie both additional module ground pads to the common ground net.
-for pin in ("40","41"):
+for pin in ("40",):
     assign(esp,pin,gnd)
 # Route two short CC1/CC2 copper segments from the actual footprint pad centres.
 # This is deliberately only a partial routing experiment; clearance/DRC still required.
