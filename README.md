@@ -1,30 +1,37 @@
 # Paky76 ESP32-S3
 
-Paky76 è un **assistente da scrivania interattivo** basato su ESP32-S3, con un display per occhi animati e menu, audio, una videocamera e una scocca stampabile in 3D. Il progetto esplora due modalità: azioni semplici eseguite sul dispositivo e risposte più articolate tramite un server JARVIS sulla rete locale.
+Paky76 è un assistente da scrivania con display, microfono, speaker e una videocamera opzionale. Il progetto prevede comandi semplici offline e risposte più articolate tramite JARVIS e Ollama su un PC o un server della rete locale.
 
-**Stato del progetto:** prototipo hardware **Rev.F**, scocca di prova **D1**. Il repository contiene i sorgenti KiCad e i file per richiedere un preventivo di assemblaggio. Le funzioni applicative, l'integrazione meccanica e il collaudo fisico sono ancora in sviluppo.
+**Revisione attuale Rev.G / D2.** Due PCB assemblabili e una scocca stampabile. Entrambe le schede hanno superato i controlli elettrici e di layout in KiCad. Il pacchetto è pronto per il preventivo del primo lotto. Il firmware applicativo, il collaudo fisico e l'accettazione del montaggio da parte di JLCPCB restano da completare.
 
-> **Rev.F:** RTC MCP7940N-I/SN, quarzo da 32,768 kHz e portapila CR1220. I file per il preventivo JLCPCB sono disponibili in due varianti, con o senza montaggio del portapila BT1. [Istruzioni Rev.F](hardware/prototipi/revf-d1/LEGGIMI-PRIMA.md) · [Pacchetto Rev.F](hardware/prototipi/revf-d1/Paky76-RevF-D1-JLCPCB.zip) · [Datasheet](hardware/prototipi/revf-d1/Paky76-Datasheet-RevF-D1.pdf) · [Manuale](hardware/prototipi/revf-d1/Paky76-Manuale-Assemblaggio-RevF-D1.pdf)
+[Pacchetto JLCPCB](hardware/prototipi/revg-d2/Paky76-RevG-D2-JLCPCB.zip) · [Istruzioni di caricamento](hardware/prototipi/revg-d2/LEGGIMI-PRIMA.md) · [Manuale di assemblaggio](hardware/prototipi/revg-d2/Paky76-Manuale-Assemblaggio-RevG-D2.pdf) · [Datasheet](hardware/prototipi/revg-d2/Paky76-Datasheet-RevG-D2.pdf) · [File di stampa 3D](hardware/prototipi/revg-d2/Scocca-D2/)
 
-## Cosa potrà fare
+## Hardware
 
-| Uso previsto | Come funziona |
+| Gruppo | Dotazione |
 | --- | --- |
-| **Interazione offline** | L'ESP32 esegue comandi brevi, aggiorna il display e riproduce suoni locali. Esempi da implementare: avviare un timer, regolare il volume o cambiare l'espressione degli occhi. Per i comandi vocali in italiano va ancora selezionato e collaudato un modello compatto. |
-| **Assistente JARVIS sulla rete locale** | Paky76 può fare da terminale per un backend JARVIS su PC o server, con modelli eseguiti tramite Ollama. L'obiettivo è ricevere risposte e riprodurle sullo speaker tramite Wi‑Fi locale, anche senza un servizio cloud. L'integrazione software è da completare. |
-| **Camera e memoria rimovibile** | Una videocamera SPI e un lettore microSD cablati possono condividere il bus di J7. La microSD può conservare immagini, audio e file di modelli compatibili con il firmware. Il funzionamento con entrambi i moduli collegati è da verificare sul campione. |
-| **Menu e indicatori** | Il frontale D1 prevede le aperture per quattro frecce, un tasto OK e un LED RGB. La specifica prevede configurazione di rete, volume, luminosità, data e ora, camera e microSD, con indicazione dello stato di connessione. Pannello e firmware del menu sono in sviluppo. |
+| Scheda principale | ESP32-S3-WROOM-1-N16R8, USB-C, RESET e BOOT, slot microSD J9 sul retro, RTC MCP7940N con batteria tampone CR1220 |
+| Interfacce | Display SPI, speaker, microfono I²S, una videocamera SPI esterna, espansione LTE opzionale |
+| Pannello comandi | Quattro frecce e OK su una PCB dedicata, collegata in I²C. LED RGB sul frontale, pilotato dal pannello |
+| Alimentazione | Ingresso da 5 V e interruttore generale cablato nella scocca |
+| Scocca D2 | Frontale, chassis, clip del display e copritasto in formato STL, con sorgente OpenSCAD |
 
-Gli **8 MB di PSRAM** sono destinati ai buffer e ai piccoli modelli locali, mentre i **16 MB di flash** ospitano firmware e dati. La capacità della microSD serve alla conservazione dei file. La conversazione libera è prevista tramite JARVIS e un LLM conversazionale a bordo dell'ESP32 resta da dimostrare.
+## Funzioni previste
 
-## Hardware e scocca
+- **Offline.** Menu sul display, timer, volume e comandi brevi. La flash da 16 MB ospita il firmware, la PSRAM da 8 MB serve per l'elaborazione e la microSD conserva file e modelli compatibili. Un piccolo modello per comandi o riconoscimento locale va ancora selezionato e provato. La capacità della microSD da sola non determina quali modelli possono girare.
+- **Sulla rete locale.** L'ESP32 può fare da terminale per un backend JARVIS e un LLM eseguito tramite Ollama. L'integrazione applicativa è in sviluppo.
+- **Controlli fisici.** Frecce e OK per il menu, LED multicolore per stato e avvisi, orologio mantenuto a dispositivo spento tramite CR1220.
 
-- **Scheda principale:** ESP32-S3-WROOM-1-N16R8, PCB a quattro strati da 66 × 42 mm, USB-C e pulsanti RESET e BOOT.
-- **Interfacce:** display SPI su J2, speaker su J3, modem LTE esterno opzionale su J4, alimentazione audio a 5 V su J5, microfono I²S su J6, camera e lettore microSD su J7. Il modem richiede alimentazione e cablaggio compatibili.
-- **Scocca D1:** sorgente OpenSCAD e STL per Cura e Artillery Sidewinder X1. Frontale, chassis, clip display e dima dei comandi sono disponibili per prove di montaggio.
-- **Sviluppi ancora previsti:** slot microSD saldato sulla scheda, pannello a cinque tasti con LED RGB e interruttore generale. La microSD si collega ancora come modulo esterno.
+## Preventivo
 
-## File della Rev.D / D1 precedente
+La scheda principale e il pannello comandi si caricano come due PCB distinti. La scheda principale richiede Standard PCBA su entrambi i lati per montare lo slot microSD, anche scegliendo di saldare a mano il portapila. Il pannello si assembla sul lato Top. Prima di confermare la produzione, verificare disponibilità, orientamento dei componenti nel render CAM e pannellizzazione con JLCPCB.
+
+## Archivio revisioni
+
+- [Rev.F / D1](hardware/prototipi/revf-d1/LEGGIMI-PRIMA.md)
+
+### Rev.D / D1
+
 
 | Risorsa | Contenuto |
 | --- | --- |
@@ -35,5 +42,3 @@ Gli **8 MB di PSRAM** sono destinati ai buffer e ai piccoli modelli locali, ment
 | [Manuale di assemblaggio PDF](hardware/prototipi/revd-d1/Paky76-Manuale-Assemblaggio-D1.pdf) | Sequenza di montaggio, cablaggio e viste CAD |
 | [Specifiche RTC e pannello](hardware/prototipi/revd-d1/Specifiche/) | Requisiti e collegamenti previsti per la prossima revisione |
 | [Pacchetto completo Rev.D / D1](hardware/prototipi/revd-d1/Paky76-Pacchetto-Prototipo-RevD-D1.zip) | Tutti i file del prototipo in un archivio |
-
-Per il **preventivo JLCPCB**, usa Gerber, BOM e CPL della stessa Rev.D. Richiedi conferma del servizio Standard PCBA, della pannellizzazione, del piazzamento dell'ESP32 e del montaggio dei connettori. Il collaudo del primo campione deve verificare alimentazione, USB, display, audio, camera e microSD e l'adattamento alla scocca.

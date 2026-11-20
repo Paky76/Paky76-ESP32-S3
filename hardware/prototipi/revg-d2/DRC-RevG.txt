@@ -1,0 +1,10 @@
+** Drc report for Paky76-RevG.kicad_pcb **
+** Created on 2026-11-20T20:09:37+0100 **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
