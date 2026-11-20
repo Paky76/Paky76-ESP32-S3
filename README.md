@@ -26,6 +26,8 @@ Paky76 è un assistente da scrivania con display, microfono, speaker e una video
 
 ## Preventivo
 
+[Scarica il pacchetto ordine Rev.G / D2.1](hardware/prototipi/revg-d2/Paky76-RevG-D2.1-Pacchetto-Ordine.zip) con i file per PCBWay Turnkey e JLCPCB, più manuale e datasheet aggiornati.
+
 La scheda principale e il pannello comandi si caricano come due PCB distinti. La scheda principale richiede Standard PCBA su entrambi i lati per montare lo slot microSD, anche scegliendo di saldare a mano il portapila. Il pannello si assembla sul lato Top. Prima di confermare la produzione, verificare disponibilità, orientamento dei componenti nel render CAM e pannellizzazione con JLCPCB.
 
 ## Archivio revisioni
