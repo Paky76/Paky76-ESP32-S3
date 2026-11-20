@@ -26,7 +26,12 @@ def edge(x1,y1,x2,y2):
 for a,b,c,d in [(100,100,150,100),(150,100,150,145),(150,145,100,145),(100,145,100,100)]: edge(a,b,c,d)
 esp=add_footprint("RF_Module","ESP32-S3-WROOM-1","U1","ESP32-S3-WROOM-1-N8",124,115)
 lcd=add_footprint("Connector_PinHeader_2.54mm","PinHeader_1x08_P2.54mm_Vertical","J_LCD","DISPLAY_INTERFACE_STUDY_ONLY",143,116)
+usb=add_footprint("Connector_USB","USB_C_Receptacle_HRO_TYPE-C-31-M-12","J_USB","USB-C_FOOTPRINT_STUDY",125,141)
+cc1=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC1","5.1k",116,137)
+cc2=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC2","5.1k",119,137)
+bulk=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_BULK","10uF_PLACEHOLDER",132,135)
+dec=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_DECOUPLE","100nF_PLACEHOLDER",135,135)
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: PCB has no traces, no nets, no USB connector and no power circuit; do not fabricate.")
+print("WARNING: All footprints are unconnected. No nets, tracks, regulator or electrical schematic. USB and LCD physical compatibility unverified; do not fabricate.")
