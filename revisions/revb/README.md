@@ -33,3 +33,5 @@ Vedi [la specifica hardware](hardware-revb.md) e [lo studio volumetrico](Paky76-
 Per la preparazione Eurocircuits, vedi [schema di banco, esportazione e revisione DFM](EUROCIRCUITS.md).
 
 [Modalità AI, provider e memoria](AI.md)
+
+[Aggiornamenti firmware OTA](OTA.md)

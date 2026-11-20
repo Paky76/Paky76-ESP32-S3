@@ -110,3 +110,22 @@ test('gateway request polls the firmware and displays its response', async () =>
   assert.equal(elements.answer.textContent, 'Risposta del modello.');
   assert.equal(elements.ask.disabled, false);
 });
+
+test('online OTA preference is sent to the firmware', async () => {
+  const requests = [];
+  const { elements } = launch('/setup', {
+    fetch: async (_url, opts) => {
+      const body = JSON.parse(opts.body);
+      requests.push(body);
+      return { ok: true, json: async () => ({ ...status, fwVersion: 1, otaLocal: true,
+                                              otaOnline: true, otaAuto: !!body.enabled }) };
+    },
+  });
+  await flush();
+  assert.equal(elements.firmwareVersion.textContent, 'Versione 1');
+  assert.equal(elements.otainstall.disabled, false);
+  elements.otaauto.checked = true;
+  await elements.otaauto.onchange();
+  assert.deepEqual(requests.at(-1), { cmd: 'ota_auto', enabled: true });
+  assert.equal(elements.otaauto.checked, true);
+});

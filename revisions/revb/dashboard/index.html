@@ -46,6 +46,17 @@ dl{display:grid;grid-template-columns:120px 1fr;gap:7px;margin:10px 0 0}dd{margi
 <div class="actions"><button id="ask" disabled>Chiedi a Paky76</button></div></form>
 <p id="answer" aria-live="polite"></p>
 </section>
+<section>
+<h2>Aggiornamento firmware</h2>
+<p id="firmwareVersion">Versione in attesa</p>
+<form id="otaupload">
+<label for="otafile">Pacchetto firmware firmato</label>
+<input type="file" id="otafile" accept=".pakyota" required disabled>
+<div class="actions"><button id="otainstall" disabled>Installa dalla dashboard</button></div>
+</form>
+<label><input id="otaauto" type="checkbox" disabled> Installa automaticamente gli aggiornamenti online</label>
+<p id="otanote" aria-live="polite"></p>
+</section>
 </main>
 <script>
 "use strict";
@@ -97,6 +108,9 @@ function show(s){
  el("open").checked=!!s.open;if(s.ip)el("ip").value=s.ip;
  el("volume").value=s.volume??45;el("volumeout").textContent=el("volume").value+"%";
  el("save").disabled=false;el("tone").disabled=false;el("ask").disabled=false;el("reopen").hidden=mode!=="usb";el("onlinechoice").disabled=!s.aiReady;
+ el("firmwareVersion").textContent=s.fwVersion ? "Versione "+s.fwVersion : "Versione in attesa";
+ el("otafile").disabled=el("otainstall").disabled=!(onDevice&&s.otaLocal);
+ el("otaauto").disabled=!s.otaOnline;el("otaauto").checked=!!s.otaAuto;
 }
 async function refresh(){show(await request("status"));}
 el("usb").onclick=async()=>{
@@ -151,6 +165,31 @@ el("basic").onsubmit=async e=>{
   }
   el("answer").textContent=s.text;
  }catch(error){el("answer").textContent=error.message;}finally{el("ask").disabled=!(mode==="wifi"||mode==="usb");}
+};
+el("otaupload").onsubmit=async e=>{
+ e.preventDefault();
+ const file=el("otafile").files[0];
+ if(!onDevice||!file)return;
+ el("otainstall").disabled=true;
+ el("otanote").textContent="Caricamento in corso. Mantieni collegata l'alimentazione.";
+ try{
+  const form=new FormData();form.append("firmware",file);
+  const r=await fetch("/api/ota",{method:"POST",headers:{"X-Paky-Setup":"1"},body:form});
+  const message=await r.text();
+  if(!r.ok)throw Error(message||"Aggiornamento rifiutato.");
+  el("otanote").textContent=message;
+ }catch(error){el("otanote").textContent=error.message;el("otainstall").disabled=false;}
+};
+el("otaauto").onchange=async()=>{
+ const setting=el("otaauto"), enabled=setting.checked;
+ setting.disabled=true;
+ try{
+  const s=await request("ota_auto",{enabled});
+  if(!s.ok)throw Error(s.error);
+  setting.checked=s.otaAuto;
+  el("otanote").textContent=enabled?"Aggiornamenti online attivati.":"Aggiornamenti online disattivati.";
+ }catch(error){setting.checked=!enabled;el("otanote").textContent=error.message;}
+ finally{setting.disabled=false;}
 };
 if(onDevice)refresh().catch(e=>notice(e.message,true));
 else notice("Collega Paky76 via USB oppure apri l’indirizzo IP che compare sul display.");

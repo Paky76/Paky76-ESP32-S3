@@ -10,6 +10,8 @@
 #include <cmath>
 #include "setup_page.h"
 #include "gateway_client.h"
+#include "ota_update.h"
+#include <memory>
 
 namespace {
 constexpr size_t FRAME_LIMIT = 768;
@@ -222,6 +224,13 @@ const char* aiCommand(const String& cmd, const JsonDocument& request, JsonDocume
   return nullptr;
 }
 
+std::unique_ptr<paky_ota::Install> localUpdate;
+bool localComplete = false;
+bool otaAutomatic = false;
+unsigned long localTouched = 0;
+unsigned long otaLastCheck = 0;
+unsigned long restartAt = 0;
+
 String handle(const String& frame, bool usb) {
   JsonDocument request;
   JsonDocument reply;
@@ -234,6 +243,17 @@ String handle(const String& frame, bool usb) {
     if (cmd == "save") error = saveSettings(request);
     else if (cmd == "tone") {
       if (!request["volume"].is<int>() || !playTestTone(request["volume"].as<int>())) error = "Tono non riuscito.";
+    } else if (cmd == "ota_auto") {
+      if (!paky_ota::canDownload()) error = "Sorgente HTTPS OTA da configurare.";
+      else if (!request["enabled"].is<bool>()) error = "Impostazione OTA non valida.";
+      else {
+        const bool enabled = request["enabled"].as<bool>();
+        if (!storage.putBool("otaAuto", enabled)) error = "Salvataggio non riuscito.";
+        else {
+          otaAutomatic = enabled;
+          otaLastCheck = millis() - paky_ota::INTERVAL_MS;
+        }
+      }
     } else if (cmd == "ask_ai" || cmd == "ai_result") {
       error = aiCommand(cmd, request, reply);
     } else if (cmd == "ask_basic") {
@@ -256,6 +276,10 @@ String handle(const String& frame, bool usb) {
     reply["ap"] = apActive ? apName : "";
     reply["apIp"] = apActive ? WiFi.softAPIP().toString() : "";
     if (usb) reply["setupKey"] = setupKey;
+    reply["fwVersion"] = paky_ota::VERSION;
+    reply["otaLocal"] = paky_ota::canUpload();
+    reply["otaOnline"] = paky_ota::canDownload();
+    reply["otaAuto"] = otaAutomatic;
     reply["aiReady"] = paky_gateway::configured();
     reply["lte"] = "Modem non integrato nel firmware di configurazione";
   }
@@ -268,6 +292,59 @@ bool authenticate() {
   if (server.authenticate("paky", setupKey.c_str())) return true;
   server.requestAuthentication(BASIC_AUTH, "Paky76", "Credenziali richieste");
   return false;
+}
+
+bool otaRequestAllowed() {
+  return server.header("X-Paky-Setup") == "1" &&
+         server.authenticate("paky", setupKey.c_str()) && paky_ota::canUpload();
+}
+
+void handleOtaUpload() {
+  HTTPUpload& upload = server.upload();
+  if (!otaRequestAllowed() || restartAt) return;
+  localTouched = millis();
+  switch (upload.status) {
+    case UPLOAD_FILE_START:
+      if (localUpdate) {
+        localUpdate->fail("Caricare un solo pacchetto.");
+        localComplete = false;
+        return;
+      }
+      localComplete = false;
+      localUpdate.reset(new paky_ota::Install);
+      if (upload.name != "firmware") localUpdate->fail("Campo firmware mancante.");
+      if (aiPending) localUpdate->fail("Attendere la fine della richiesta AI.");
+      break;
+    case UPLOAD_FILE_WRITE:
+      if (localUpdate) localUpdate->feed(upload.buf, upload.currentSize);
+      break;
+    case UPLOAD_FILE_END:
+      localComplete = localUpdate && !localUpdate->error;
+      break;
+    case UPLOAD_FILE_ABORTED:
+      localUpdate.reset();
+      localComplete = false;
+      break;
+  }
+}
+
+void finishOtaUpload() {
+  if (server.header("X-Paky-Setup") != "1") {
+    server.send(403);
+    return;
+  }
+  if (!authenticate()) return;
+  if (!paky_ota::canUpload() || !localUpdate) {
+    server.send(400, "text/plain; charset=utf-8", "OTA locale non pronto o pacchetto mancante.");
+    return;
+  }
+  const bool installed = localComplete && localUpdate->commit();
+  server.send(installed ? 200 : 422, "text/plain; charset=utf-8",
+      installed ? "Firmware verificato. Riavvio in corso." :
+      (localUpdate->error ? localUpdate->error : "Pacchetto incompleto."));
+  localUpdate.reset();
+  localComplete = false;
+  if (installed) restartAt = millis() + 650;
 }
 
 void processUsb() {
@@ -306,6 +383,7 @@ void drawScreen() {
 
 void setup() {
   Serial.begin(115200);
+  Serial.println(paky_ota::BUILD_MARKER);
 #ifdef PAKY_AUDIO_ENABLE_GPIO
   pinMode(PAKY_AUDIO_ENABLE_GPIO, OUTPUT);
   digitalWrite(PAKY_AUDIO_ENABLE_GPIO, LOW);
@@ -330,6 +408,9 @@ void setup() {
   WiFi.setAutoReconnect(true);
   connectWifi();
   paky_gateway::startClock();
+  if (paky_ota::canDownload() && strlen(PAKY_OTA_NTP)) configTime(0, 0, PAKY_OTA_NTP);
+  otaAutomatic = paky_ota::canDownload() && storage.getBool("otaAuto", false);
+  otaLastCheck = millis() - paky_ota::INTERVAL_MS;
   aiFinished = xQueueCreate(1, sizeof(AiJob*));
   const char* headers[] = {"X-Paky-Setup"};
   server.collectHeaders(headers, 1);
@@ -351,6 +432,7 @@ void setup() {
     server.sendHeader("Cache-Control", "no-store");
     server.send(200, "application/json", handle(server.arg("plain"), false));
   });
+  server.on("/api/ota", HTTP_POST, finishOtaUpload, handleOtaUpload);
   server.begin();
 }
 
@@ -363,6 +445,17 @@ void loop() {
   processUsb();
   server.handleClient();
   const unsigned long now = millis();
+  if (restartAt && static_cast<long>(now - restartAt) >= 0) ESP.restart();
+  if (localUpdate && now - localTouched > 10000) {
+    localUpdate.reset();
+    localComplete = false;
+  }
+  if (!restartAt && !localUpdate && !aiPending && otaAutomatic &&
+      WiFi.status() == WL_CONNECTED && time(nullptr) >= 1704067200 &&
+      now - otaLastCheck >= paky_ota::INTERVAL_MS) {
+    otaLastCheck = now;
+    if (paky_ota::download()) ESP.restart();
+  }
   if (reconnectPending && static_cast<long>(now - reconnectAt) >= 0) {
     reconnectPending = false;
     connectWifi();
