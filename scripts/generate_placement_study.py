@@ -78,6 +78,15 @@ for pin in ("A6","B6"):
 for pin,network in (("1",gnd),("2",v33),("13",usb_dn),("14",usb_dp)):
     assign(esp,pin,network)
 # EN and remaining module GND pins deliberately not wired: schematic pending.
+# Native ESP32-S3 module pad numbers for the proposed ST7789 SPI bus.
+# LCD connector pins remain UNASSIGNED until the exact module pin order is verified.
+lcd_signals={"LCD_MOSI":"19","LCD_SCLK":"20","LCD_CS":"18",
+             "LCD_DC":"17","LCD_RST":"12","LCD_BL":"7"}
+for signal,pin in lcd_signals.items():
+    assign(esp,pin,net(signal))
+# Tie both additional module ground pads to the common ground net.
+for pin in ("40","41"):
+    assign(esp,pin,gnd)
 # Route two short CC1/CC2 copper segments from the actual footprint pad centres.
 # This is deliberately only a partial routing experiment; clearance/DRC still required.
 def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=0.2):
