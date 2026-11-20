@@ -1,0 +1,3 @@
+.pio/
+include/gateway_config.local.h
+include/ota_config.local.h

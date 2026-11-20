@@ -1,0 +1,70 @@
+name: Rev.B engineering validation
+on:
+  push:
+    paths:
+      - 'revisions/revb/**'
+      - '.github/workflows/revb-validation.yml'
+  pull_request:
+    paths:
+      - 'revisions/revb/**'
+      - '.github/workflows/revb-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dashboard-and-mechanical:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test USB and Wi-Fi setup scenarios
+        run: node --test revisions/revb/checks/dashboard.test.cjs
+      - name: Test model adapters and local API
+        run: python3 -m unittest discover -s revisions/revb/ai -v
+      - name: Verify OTA package signing and integrity
+        run: python3 -m unittest discover -s revisions/revb/ota -v
+      - name: Validate parametric enclosure source
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends openscad
+          openscad --hardwarnings -o /tmp/revb-layout.csg revisions/revb/Paky76-RevB-ingombri.scad
+          test -s /tmp/revb-layout.csg
+
+  firmware:
+    strategy:
+      matrix:
+        include:
+          - environment: esp32s3
+            ota_target: 1
+          - environment: esp32s3_revb_audio
+            ota_target: 2
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: revisions/revb/firmware
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PlatformIO
+        run: python -m pip install platformio==6.1.18
+      - name: Compile ESP32-S3 Rev.B setup firmware
+        run: pio run -e "${{ matrix.environment }}"
+      - name: Verify OTA package generation from compiled binary
+        run: |
+          key_dir="$(mktemp -d)"
+          trap 'rm -rf "$key_dir"' EXIT
+          openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:P-256 -out "$key_dir/test.pem"
+          python3 ../ota/package.py --firmware ".pio/build/${{ matrix.environment }}/firmware.bin" \
+            --version 1 --target "${{ matrix.ota_target }}" --key "$key_dir/test.pem" \
+            --output "$key_dir/test.pakyota"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paky76-revb-${{ matrix.environment }}
+          path: revisions/revb/firmware/.pio/build/${{ matrix.environment }}/firmware.bin
+          if-no-files-found: error
