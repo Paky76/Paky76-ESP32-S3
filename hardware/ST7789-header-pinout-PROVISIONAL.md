@@ -1,6 +1,6 @@
 # Paky76 Rev.A — ST7789 external module interface (PROVISIONAL)
 
-**Status: engineering assumption, NOT validated for fabrication.**
+**Display family selected by project owner: ST7789 240×240 SPI 8-pin breakout. Exact manufacturer, pin order, voltage and backlight drive are NOT yet verified for fabrication.**
 
 The external 240×240 ST7789 SPI display is attached to the eight-position 2.54 mm header `J_LCD`. This header mapping assumes a breakout marked `GND VCC SCL SDA RES DC CS BLK`, in that order. **Different ST7789 modules have different pin orders and voltage requirements. Do not order a PCB or plug in a display until the exact module part number, pin order, power voltage, and backlight electrical characteristics have been checked.**
 
