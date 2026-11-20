@@ -39,6 +39,7 @@ jobs:
           kicad-cli sch erc --exit-code-violations -o reports/erc.txt "$CAD.kicad_sch"
       - name: DRC and schematic parity
         run: |
+          trap 'if [[ -s reports/drc.txt ]]; then cat reports/drc.txt; fi' EXIT
           kicad-cli pcb drc --schematic-parity --exit-code-violations -o reports/drc.txt "$CAD.kicad_pcb"
       - name: Upload validation reports
         if: always()
