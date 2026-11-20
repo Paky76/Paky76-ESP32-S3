@@ -35,7 +35,7 @@ reg=add_footprint("Package_TO_SOT_SMD","SOT-23-5","U_REG","AP2112K-3.3TRG1_CANDI
 reg_in=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_IN","10uF_CANDIDATE",133,140)
 reg_out=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_OUT","10uF_CANDIDATE",141,140)
 en_pullup=add_footprint("Resistor_SMD","R_0603_1608Metric","R_EN","10k_CANDIDATE",137,130)
-en_cap=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_EN","1uF_CANDIDATE",137,130)
+en_cap=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_EN","1uF_CANDIDATE",141,130)
 boot_pullup=add_footprint("Resistor_SMD","R_0603_1608Metric","R_BOOT","10k_CANDIDATE",132,130)
 # Preliminary USB-C sink pad net assignments on the real KiCad pads.
 # Only these connector pads are mapped. This is NOT a schematic or routed design.
