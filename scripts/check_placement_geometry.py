@@ -8,7 +8,7 @@ import pcbnew as pcb
 BOARD="hardware/Paky76-RevA-placement-study.kicad_pcb"
 b=pcb.LoadBoard(BOARD)
 footprints=list(b.GetFootprints())
-expected={"U1","J_LCD","J_USB","R_CC1","R_CC2","C_BULK","C_DECOUPLE","U_REG","C_REG_IN","C_REG_OUT"}
+expected={"U1","J_LCD","J_USB","R_CC1","R_CC2","C_BULK","C_DECOUPLE","U_REG","C_REG_IN","C_REG_OUT","R_EN","C_EN","R_BOOT"}
 actual={f.GetReference() for f in footprints}
 if actual != expected:
     sys.exit("Incorrect footprint population: expected %s, found %s"%(sorted(expected),sorted(actual)))
