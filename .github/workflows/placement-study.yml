@@ -6,6 +6,7 @@ on:
       - 'scripts/check_placement_geometry.py'
       - 'scripts/export_footprint_padmap.py'
       - 'scripts/check_usb_sink_nets.py'
+      - 'scripts/check_power_pad_nets.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -25,6 +26,8 @@ jobs:
         run: /usr/bin/python3 scripts/check_placement_geometry.py
       - name: Validate USB-C physical pad net mapping
         run: /usr/bin/python3 scripts/check_usb_sink_nets.py
+      - name: Validate provisional power pad nets
+        run: /usr/bin/python3 scripts/check_power_pad_nets.py
       - name: Export real footprint pad coordinates
         run: /usr/bin/python3 scripts/export_footprint_padmap.py
       - name: Export preliminary DRC report (advisory, expected incomplete design)
