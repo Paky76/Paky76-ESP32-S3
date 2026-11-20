@@ -419,7 +419,7 @@
 			)
 		)
 	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
+	(footprint "Paky76:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "1a21e3ed-ba09-40b9-bae9-c21c964fb79c")
 		(at 145 137.5 90)
@@ -1656,7 +1656,7 @@
 			)
 		)
 	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
+	(footprint "Paky76:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "56fac928-2b4a-4467-a9e5-9b239a3afe5b")
 		(at 131 138 90)
@@ -1851,7 +1851,7 @@
 			)
 		)
 	)
-	(footprint "Package_TO_SOT_SMD:SOT-23-5"
+	(footprint "Paky76:SOT-23-5"
 		(layer "F.Cu")
 		(uuid "8678d3c7-6f6a-4ca7-8f4b-2a1cbd012c9f")
 		(at 149 128)
@@ -2485,7 +2485,7 @@
 			)
 		)
 	)
-	(footprint "Connector_JST:JST_PH_B8B-PH-K_1x08_P2.00mm_Vertical"
+	(footprint "Paky76:JST_PH_B8B-PH-K_1x08_P2.00mm_Vertical"
 		(layer "F.Cu")
 		(uuid "887f2f98-4297-4535-88cd-c6899c78508c")
 		(at 106.5 125.5 90)
@@ -3227,7 +3227,7 @@
 			)
 		)
 	)
-	(footprint "Capacitor_SMD:C_0603_1608Metric"
+	(footprint "Paky76:C_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "892b8c5a-47f9-4bcb-bbb8-8f8b6dc0b517")
 		(at 126.5 105.35 90)
@@ -3422,7 +3422,7 @@
 			)
 		)
 	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
+	(footprint "Paky76:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "9233d673-f707-4969-8dec-20b89a1f6d73")
 		(at 117 112 180)
@@ -3617,7 +3617,7 @@
 			)
 		)
 	)
-	(footprint "Capacitor_SMD:C_0805_2012Metric"
+	(footprint "Paky76:C_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "b16b7399-8cca-443b-ba5b-8d8fe91a20da")
 		(at 145 128 90)
@@ -3812,7 +3812,7 @@
 			)
 		)
 	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
+	(footprint "Paky76:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "c786164a-7f59-4e9f-9544-c7c0d607f45e")
 		(at 152 111.5)
@@ -4007,7 +4007,7 @@
 			)
 		)
 	)
-	(footprint "Capacitor_SMD:C_0603_1608Metric"
+	(footprint "Paky76:C_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "d674fd85-0fa0-455e-8895-f876b15f8a4d")
 		(at 152 116)
@@ -4549,7 +4549,7 @@
 			)
 		)
 	)
-	(footprint "Resistor_SMD:R_0603_1608Metric"
+	(footprint "Paky76:R_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "e3c4a801-6fdd-4eea-a8f3-65d4c9188528")
 		(at 151 122 90)
@@ -4744,7 +4744,7 @@
 			)
 		)
 	)
-	(footprint "Capacitor_SMD:C_0805_2012Metric"
+	(footprint "Paky76:C_0805_2012Metric"
 		(layer "F.Cu")
 		(uuid "efd809da-c5da-4984-9c49-5b9543aef40d")
 		(at 153 128 90)
