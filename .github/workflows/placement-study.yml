@@ -11,6 +11,7 @@ on:
       - 'scripts/check_lcd_gpio_nets.py'
       - 'scripts/check_boot_en_nets.py'
       - 'scripts/check_routed_segments.py'
+      - 'scripts/summarize_drc.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -47,6 +48,10 @@ jobs:
         run: |
           mkdir -p preview
           kicad-cli pcb drc --output preview/placement-study-drc.txt hardware/Paky76-RevA-placement-study.kicad_pcb
+      - name: Summarize KiCad DRC blockers
+        if: always()
+        run: |
+          /usr/bin/python3 scripts/summarize_drc.py preview/placement-study-drc.txt
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
