@@ -100,7 +100,7 @@ for signal,pin in lcd_signals.items():
 # Tie both additional module ground pads to the common ground net.
 for pin in ("40",):
     assign(esp,pin,gnd)
-# Route two short CC1/CC2 copper segments from the actual footprint pad centres.
+# Define copper track helper. USB CC straight segments are UNSAFE and not generated.
 # This is deliberately only a partial routing experiment; clearance/DRC still required.
 def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=0.2):
     start=[p for p in source.Pads() if p.GetNumber()==source_number]
@@ -114,8 +114,8 @@ def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=
     track.SetLayer(pcb.F_Cu)
     track.SetNet(network)
     board.Add(track)
-route_pad_to_pad(usb,"A5",cc1,"1",cc1net)
-route_pad_to_pad(usb,"B5",cc2,"1",cc2net)
+# USB CC traces were removed after KiCad DRC found actual shorts through adjacent connector pads.
+# Re-route only after defining safe breakout geometry, clearances and vias.
 # Additional short, physical EN RC interconnect; DRC must assess clearance.
 route_pad_to_pad(en_pullup,"2",en_cap,"1",en)
 # USB D+/D- and ESP32 pins are deliberately not connected until the schematic
@@ -123,4 +123,4 @@ route_pad_to_pad(en_pullup,"2",en_cap,"1",en)
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: USB-C and provisional regulator pad nets assigned. Two CC tracks and one EN RC track; no validated schematic or regulator routing. USB and LCD physical compatibility unverified; do not fabricate.")
+print("WARNING: USB-C and provisional regulator pad nets assigned. Only one EN RC track; USB CC tracks removed due to verified shorts; no validated schematic or regulator routing. USB and LCD physical compatibility unverified; do not fabricate.")
