@@ -134,6 +134,9 @@ bool playTestTone(int volume) {
   pins.data_in_num = I2S_PIN_NO_CHANGE;
   if (i2s_driver_install(I2S_NUM_0, &bus, 0, nullptr) != ESP_OK) return false;
   bool ok = i2s_set_pin(I2S_NUM_0, &pins) == ESP_OK;
+#ifdef PAKY_AUDIO_ENABLE_GPIO
+  if (ok) digitalWrite(PAKY_AUDIO_ENABLE_GPIO, HIGH);
+#endif
   int16_t stereo[256];
   int sample = 0;
   for (int block = 0; ok && block < 32; ++block) {
@@ -147,6 +150,9 @@ bool playTestTone(int volume) {
          && written == sizeof(stereo);
   }
   if (ok) delay(40);
+#ifdef PAKY_AUDIO_ENABLE_GPIO
+  digitalWrite(PAKY_AUDIO_ENABLE_GPIO, LOW);
+#endif
   i2s_driver_uninstall(I2S_NUM_0);
   return ok;
 }
@@ -228,6 +234,10 @@ void drawScreen() {
 
 void setup() {
   Serial.begin(115200);
+#ifdef PAKY_AUDIO_ENABLE_GPIO
+  pinMode(PAKY_AUDIO_ENABLE_GPIO, OUTPUT);
+  digitalWrite(PAKY_AUDIO_ENABLE_GPIO, LOW);
+#endif
   face.init();
   face.setRotation(0);
   storage.begin("paky-setup", false);

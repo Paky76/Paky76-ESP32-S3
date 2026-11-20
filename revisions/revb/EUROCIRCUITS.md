@@ -13,6 +13,14 @@ Lo schema nativo [Paky76-RevB-bench.kicad_sch](hardware/Paky76-RevB-bench.kicad_
 
 Usare moduli di valutazione alimentati secondo le rispettive specifiche, con massa comune e interfaccia a livelli verificati. J3 e J4 espongono soltanto logica e massa. Verificare il livello UART e la direzione dei segnali sulla variante specifica del modem. PWRKEY e RESET richiedono lo stadio di pilotaggio del reference design. La misura sul banco deve accertare la stabilità del rail del modem durante trasmissione LTE e quella del percorso audio a volume elevato. Il firmware corrente supporta la configurazione e il tono audio. La sessione dati LTE e il parlato restano da integrare.
 
+## Ramo audio integrato
+
+Lo [schema audio Rev.B](hardware/Paky76-RevB-audio-engineering.kicad_sch) aggiunge MAX98357AETE+T con alimentazione di banco 5 V su J5, disaccoppiamento locale, GPIO13 per l'abilitazione e uscita differenziale J3 per lo speaker. Il rail audio e USB VBUS sono reti separate con massa comune. L'altoparlante si collega fra SPK_P e SPK_N. La resistenza su GAIN_SLOT seleziona il guadagno nominale di 3 dB e il pull-down su SD_MODE tiene spento lo stadio in assenza di comando MCU.
+
+Per questa variante, compilare il firmware con `pio run -e esp32s3_revb_audio`; la variante di banco predefinita resta `esp32s3`. L'ambiente audio abilita l'amplificatore durante il tono e lo disabilita prima di arrestare I²S. Entrambi gli ambienti sono inclusi nella CI. L'integrazione audio ha superato l'ERC con zero rilievi; la netlist è stata verificata per I²S, enable, guadagno, uscita, alimentazione e massa.
+
+Prima del layout serve un footprint del TQFN concordato con le quote del disegno 90-0031 e con Eurocircuits. Il footprint standard attualmente assegnato è indicativo e va sostituito o verificato. [Datasheet MAX98357A](https://www.analog.com/media/en/technical-documentation/data-sheets/max98357a-max98357b.pdf) · [Land pattern 90-0031](https://mds.analog.com/api/public/content/90-0031.pdf).
+
 ## Generazione del pacchetto di revisione DFM
 
 Servono i sorgenti nativi **Rev.B** con basename `hardware/Paky76-RevB` per schema, PCB e progetto KiCad, più `hardware/bom-revb-pcba.csv` con intestazioni `Reference,MPN,Description` ed eventuale `SPN`. Includere la popolazione del PCB per il PCBA e gestire display, speaker, antenne e cablaggi esterni nell'integrazione meccanica.
