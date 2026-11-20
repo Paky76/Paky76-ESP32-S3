@@ -17,6 +17,10 @@ print("=== KiCad DRC issue types (preliminary placement study) ===")
 for name,n in counts.most_common():
     print("%-38s %d"%(name,n))
 print("Total parsed issues:",sum(counts.values()))
+for critical in ("shorting_items","shorting_tracks","track_dangling","clearance"):
+    print("DRC %-32s %d"%(critical,counts[critical]))
+if counts["shorting_items"] or counts["shorting_tracks"]:
+    print("CRITICAL: KiCad still reports physical copper short circuits.")
 if not counts:
     print("No bracketed issue entries found; inspect raw report before interpreting.")
 print("REPORT ONLY: this PCB lacks a completed schematic and most copper routes.")
