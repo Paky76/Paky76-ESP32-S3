@@ -27,6 +27,11 @@ jobs:
         run: /usr/bin/python3 scripts/check_usb_sink_nets.py
       - name: Export real footprint pad coordinates
         run: /usr/bin/python3 scripts/export_footprint_padmap.py
+      - name: Export preliminary DRC report (advisory, expected incomplete design)
+        continue-on-error: true
+        run: |
+          mkdir -p preview
+          kicad-cli pcb drc --output preview/placement-study-drc.txt hardware/Paky76-RevA-placement-study.kicad_pcb
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
