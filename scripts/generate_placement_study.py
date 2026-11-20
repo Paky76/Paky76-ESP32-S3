@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create an EDITABLE placement-only KiCad PCB study. No tracks, not for fabrication."""
+"""Generate an editable but electrically INCOMPLETE KiCad PCB study. NOT FOR FABRICATION."""
 import os
 import pcbnew as pcb
 
@@ -31,6 +31,9 @@ cc1=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC1","5.1k",116,137)
 cc2=add_footprint("Resistor_SMD","R_0603_1608Metric","R_CC2","5.1k",119,137)
 bulk=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_BULK","10uF_PLACEHOLDER",132,135)
 dec=add_footprint("Capacitor_SMD","C_0603_1608Metric","C_DECOUPLE","100nF_PLACEHOLDER",135,135)
+reg=add_footprint("Package_TO_SOT_SMD","SOT-23-5","U_REG","AP2112K-3.3TRG1_CANDIDATE",137,140)
+reg_in=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_IN","10uF_CANDIDATE",133,140)
+reg_out=add_footprint("Capacitor_SMD","C_0805_2012Metric","C_REG_OUT","10uF_CANDIDATE",141,140)
 # Preliminary USB-C sink pad net assignments on the real KiCad pads.
 # Only these connector pads are mapped. This is NOT a schematic or routed design.
 def net(name):
@@ -46,6 +49,7 @@ gnd=net("GND")
 vbus=net("USB_VBUS_5V")
 cc1net=net("USB_CC1")
 cc2net=net("USB_CC2")
+v33=net("+3V3")
 for number in ("A1","A12","B1","B12"):
     assign(usb,number,gnd)
 for number in ("A4","A9","B4","B9"):
@@ -56,6 +60,12 @@ assign(cc1,"1",cc1net)
 assign(cc1,"2",gnd)
 assign(cc2,"1",cc2net)
 assign(cc2,"2",gnd)
+# Candidate AP2112K SOT-23-5: 1 VIN, 2 GND, 3 EN, 4 NC, 5 VOUT.
+for pin,network in (("1",vbus),("2",gnd),("3",vbus),("5",v33)):
+    assign(reg,pin,network)
+for capacitor,rail in ((reg_in,vbus),(reg_out,v33),(bulk,vbus),(dec,v33)):
+    assign(capacitor,"1",rail)
+    assign(capacitor,"2",gnd)
 # Route two short CC1/CC2 copper segments from the actual footprint pad centres.
 # This is deliberately only a partial routing experiment; clearance/DRC still required.
 def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=0.2):
@@ -77,4 +87,4 @@ route_pad_to_pad(usb,"B5",cc2,"1",cc2net)
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: Only USB-C CC/GND/VBUS pad nets are assigned. Only two CC copper segments; no regulator or electrical schematic. USB and LCD physical compatibility unverified; do not fabricate.")
+print("WARNING: USB-C and provisional regulator pad nets assigned. Only two CC tracks; no validated schematic or regulator routing. USB and LCD physical compatibility unverified; do not fabricate.")
