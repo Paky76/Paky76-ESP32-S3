@@ -12,6 +12,7 @@ on:
       - 'scripts/check_boot_en_nets.py'
       - 'scripts/check_routed_segments.py'
       - 'scripts/summarize_drc.py'
+      - 'scripts/check_drc_shorts.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -52,6 +53,8 @@ jobs:
         if: always()
         run: |
           /usr/bin/python3 scripts/summarize_drc.py preview/placement-study-drc.txt
+      - name: Reject physical copper shorts detected by KiCad
+        run: /usr/bin/python3 scripts/check_drc_shorts.py preview/placement-study-drc.txt
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
