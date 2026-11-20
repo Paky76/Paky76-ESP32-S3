@@ -17,11 +17,11 @@ for fp in board.GetFootprints():
         pos=pad.GetPosition()
         rows.append((fp.GetReference(),pad.GetNumber(),pad.GetNetname() or "UNASSIGNED",
                      f"{pcb.ToMM(pos.x):.4f}",f"{pcb.ToMM(pos.y):.4f}",
-                     pcb.LayerName(pad.GetLayer())))
+                     str(pad.GetLayer())))
 rows.sort(key=lambda x:(x[0],x[1],x[3],x[4]))
 with (out/"physical-pad-netlist-PROVISIONAL.csv").open("w",newline="",encoding="utf-8") as f:
     writer=csv.writer(f)
-    writer.writerow(["Reference","Pad number","Assigned net","X mm","Y mm","Pad primary layer"])
+    writer.writerow(["Reference","Pad number","Assigned net","X mm","Y mm","Pad layer ID"])
     writer.writerows(rows)
 unassigned=[r for r in rows if r[2]=="UNASSIGNED"]
 print(f"Physical pad inventory: {len(rows)} pads, {len(unassigned)} unassigned")
