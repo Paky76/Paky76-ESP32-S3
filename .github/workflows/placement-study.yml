@@ -13,7 +13,23 @@ jobs:
       - name: Install KiCad and pcbnew
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y kicad python3-pcbnew
+          sudo apt-get install -y kicad
+          dpkg -L kicad | grep -E 'pcbnew|\.so
+          /usr/bin/python3 -c 'import pcbnew; print(pcbnew.GetBuildVersion())'
+      - name: Generate native PCB placement study
+        run: /usr/bin/python3 scripts/generate_placement_study.py
+      - name: Export SVG placement preview
+        run: |
+          mkdir -p preview
+          kicad-cli pcb export svg -l F.Cu,F.Silkscreen,Edge.Cuts -o preview/ hardware/Paky76-RevA-placement-study.kicad_pcb
+      - name: Upload editable PCB and preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: Paky76-placement-study-NOT-FOR-FABRICATION
+          path: |
+            hardware/Paky76-RevA-placement-study.kicad_pcb
+            preview/
+ | head -25 || true
           /usr/bin/python3 -c 'import pcbnew; print(pcbnew.GetBuildVersion())'
       - name: Generate native PCB placement study
         run: /usr/bin/python3 scripts/generate_placement_study.py
