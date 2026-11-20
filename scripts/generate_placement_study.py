@@ -127,9 +127,12 @@ def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=
 # Re-route only after defining safe breakout geometry, clearances and vias.
 # Additional short, physical EN RC interconnect; DRC must assess clearance.
 route_pad_to_pad(en_pullup,"2",en_cap,"1",en)
+# A short same-net power bypass between two nearby capacitors. DRC must gate
+# any unexpected pad clearance or short; this is NOT a completed power plane.
+route_pad_to_pad(reg_out,"1",dec,"1",v33,0.25)
 # USB D+/D- and ESP32 pins are deliberately not connected until the schematic
 # and connector symbol/footprint pin-number mapping have been independently reviewed.
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: USB-C and provisional regulator pad nets assigned. Only one EN RC track; USB CC tracks removed due to verified shorts; no validated schematic or regulator routing. USB and LCD header order provisional and physical compatibility unverified; do not fabricate.")
+print("WARNING: USB-C and provisional regulator pad nets assigned. Only two preliminary tracks; USB CC tracks removed due to verified shorts; no validated schematic or regulator routing. USB and LCD header order provisional and physical compatibility unverified; do not fabricate.")
