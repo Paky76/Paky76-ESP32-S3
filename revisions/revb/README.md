@@ -31,3 +31,5 @@ Il workflow **Rev.B engineering validation** ripete i test della dashboard, la g
 Vedi [la specifica hardware](hardware-revb.md) e [lo studio volumetrico](Paky76-RevB-ingombri.scad).
 
 Per la preparazione Eurocircuits, vedi [schema di banco, esportazione e revisione DFM](EUROCIRCUITS.md).
+
+[Modalità AI, provider e memoria](AI.md)

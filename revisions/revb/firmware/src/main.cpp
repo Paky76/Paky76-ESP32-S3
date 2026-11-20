@@ -157,6 +157,19 @@ bool playTestTone(int volume) {
   return ok;
 }
 
+String askBasic(String prompt) {
+  prompt.trim();
+  prompt.toLowerCase();
+  while (!prompt.isEmpty() && (prompt.endsWith("?") || prompt.endsWith("!") || prompt.endsWith("."))) {
+    prompt.remove(prompt.length() - 1);
+  }
+  prompt.trim();
+  if (prompt == "ciao" || prompt == "salve" || prompt == "buongiorno") return "Ciao, sono Paky76.";
+  if (prompt == "chi sei") return "Sono Paky76, il tuo assistente da scrivania.";
+  if (prompt == "stato rete") return WiFi.status() == WL_CONNECTED ? "Wi-Fi collegato." : "Wi-Fi scollegato.";
+  return "Modalità di base. Usa ciao, chi sei o stato rete.";
+}
+
 String handle(const String& frame, bool usb) {
   JsonDocument request;
   JsonDocument reply;
@@ -169,6 +182,10 @@ String handle(const String& frame, bool usb) {
     if (cmd == "save") error = saveSettings(request);
     else if (cmd == "tone") {
       if (!request["volume"].is<int>() || !playTestTone(request["volume"].as<int>())) error = "Tono non riuscito.";
+    } else if (cmd == "ask_basic") {
+      const String prompt = request["prompt"] | "";
+      if (prompt.isEmpty() || prompt.length() > 160) error = "Prompt da 1 a 160 byte.";
+      else reply["text"] = askBasic(prompt);
     } else if (cmd == "ap" && usb) {
       if (!enableSetupAp()) error = "Avvio Wi-Fi di configurazione non riuscito.";
     } else if (cmd != "status") error = "Comando sconosciuto.";

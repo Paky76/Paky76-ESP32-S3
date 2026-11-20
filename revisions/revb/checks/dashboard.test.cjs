@@ -7,7 +7,7 @@ const { join } = require('node:path');
 const root = join(__dirname, '..');
 const html = readFileSync(join(root, 'dashboard/index.html'), 'utf8');
 const script = html.split('<script>')[1].split('</script>')[0];
-const status = { paky: 1, ok: true, ip: '192.168.1.43', ssid: 'TestLab', volume: 45, apn: 'iot.example', open: false };
+const status = { paky: 1, ok: true, text: "Ciao, sono Paky76.", ip: '192.168.1.43', ssid: 'TestLab', volume: 45, apn: 'iot.example', open: false };
 const event = { preventDefault() {} };
 const flush = () => new Promise(resolve => setImmediate(resolve));
 
@@ -74,6 +74,11 @@ test('USB framing, setup key, hotspot recovery and disconnect', async () => {
   assert.match(elements.ap.textContent, /0123456789ab/);
   await elements.reopen.onclick();
   assert.equal(requests[1].cmd, 'ap');
+  elements.prompt.value = 'ciao';
+  await elements.basic.onsubmit(event);
+  assert.equal(requests[2].cmd, 'ask_basic');
+  assert.equal(requests[2].prompt, 'ciao');
+  assert.equal(elements.answer.textContent, status.text);
   await elements.usb.onclick();
   await flush();
   assert.ok(closed);

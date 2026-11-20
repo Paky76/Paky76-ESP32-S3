@@ -40,6 +40,12 @@ dl{display:grid;grid-template-columns:120px 1fr;gap:7px;margin:10px 0 0}dd{margi
 <button id="save" disabled>Salva impostazioni</button>
 <p id="notice" role="status" aria-live="polite"></p>
 </form>
+<section>
+<h2>Prova comandi offline</h2>
+<form id="basic"><label for="prompt">Comando breve</label><input id="prompt" maxlength="160" required placeholder="Per esempio: chi sei?">
+<div class="actions"><button id="ask" disabled>Chiedi a Paky76</button></div></form>
+<p id="answer" aria-live="polite"></p>
+</section>
 </main>
 <script>
 "use strict";
@@ -79,7 +85,7 @@ async function readSerial(){
   if(pending){pending.reject(Error("USB scollegata."));pending=null;}
   reader.releaseLock();writer.releaseLock();await port.close().catch(()=>{});
   reader=writer=port=null;mode=onDevice?"wifi":null;
-  el("usb").textContent="Collega USB";el("save").disabled=!onDevice;el("tone").disabled=!onDevice;el("reopen").hidden=true;
+  el("usb").textContent="Collega USB";el("save").disabled=!onDevice;el("tone").disabled=!onDevice;el("ask").disabled=!onDevice;el("reopen").hidden=true;
  }
 }
 function show(s){
@@ -90,7 +96,7 @@ function show(s){
  el("lte").textContent=s.lte||"Non disponibile";el("apn").value=s.apn||"";
  el("open").checked=!!s.open;if(s.ip)el("ip").value=s.ip;
  el("volume").value=s.volume??45;el("volumeout").textContent=el("volume").value+"%";
- el("save").disabled=false;el("tone").disabled=false;el("reopen").hidden=mode!=="usb";
+ el("save").disabled=false;el("tone").disabled=false;el("ask").disabled=false;el("reopen").hidden=mode!=="usb";
 }
 async function refresh(){show(await request("status"));}
 el("usb").onclick=async()=>{
@@ -123,6 +129,14 @@ el("settings").onsubmit=async e=>{
  try{show(await request("save",{ssid:el("ssid").value,password:el("password").value,open:el("open").checked,apn:el("apn").value.trim(),volume:Number(el("volume").value)}));
  el("password").value="";notice("Impostazioni salvate. Attendi la connessione, poi aggiorna lo stato per leggere il nuovo IP.");
  }catch(e){notice(e.message,true);}finally{el("save").disabled=false;}
+};
+el("basic").onsubmit=async e=>{
+ e.preventDefault();
+ try{
+  const s=await request("ask_basic",{prompt:el("prompt").value});
+  if(!s.ok)throw Error(s.error);
+  el("answer").textContent=s.text;
+ }catch(error){el("answer").textContent=error.message;}
 };
 if(onDevice)refresh().catch(e=>notice(e.message,true));
 else notice("Collega Paky76 via USB oppure apri l’indirizzo IP che compare sul display.");

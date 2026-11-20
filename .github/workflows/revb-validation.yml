@@ -23,6 +23,8 @@ jobs:
           node-version: '22'
       - name: Test USB and Wi-Fi setup scenarios
         run: node --test revisions/revb/checks/dashboard.test.cjs
+      - name: Test model adapters and local API
+        run: python3 -m unittest discover -s revisions/revb/ai -v
       - name: Validate parametric enclosure source
         run: |
           sudo apt-get update
