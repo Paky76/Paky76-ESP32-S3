@@ -4,6 +4,8 @@ Paky76 è un **assistente da scrivania interattivo** basato su ESP32-S3, con un 
 
 **Stato del progetto:** prototipo hardware **Rev.D**, scocca di prova **D1**. Il repository contiene i sorgenti KiCad e i file per richiedere un preventivo di assemblaggio. Le funzioni applicative, l'integrazione meccanica e il collaudo fisico sono ancora in sviluppo.
 
+> **Batteria tampone:** la PCB Rev.D pubblicata è priva del circuito RTC e del portapila CR1220. La [specifica RTC](hardware/prototipi/revd-d1/Specifiche/Paky76-Specifica-RTC.md) descrive l'integrazione prevista. Per ordinare una scheda con batteria tampone servono schema, PCB, Gerber, BOM e CPL della revisione successiva.
+
 ## Cosa potrà fare
 
 | Uso previsto | Come funziona |
