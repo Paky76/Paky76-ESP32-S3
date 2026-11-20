@@ -13,6 +13,7 @@ on:
       - 'scripts/check_routed_segments.py'
       - 'scripts/summarize_drc.py'
       - 'scripts/check_drc_shorts.py'
+      - 'scripts/test_drc_short_gate.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -26,6 +27,8 @@ jobs:
           sudo apt-get install -y kicad
           kicad-cli version
           /usr/bin/python3 -c 'import pcbnew; print(pcbnew.GetBuildVersion())'
+      - name: Regression-test KiCad DRC short gate
+        run: python3 scripts/test_drc_short_gate.py
       - name: Generate native PCB placement study
         run: /usr/bin/python3 scripts/generate_placement_study.py
       - name: Check physical footprint envelopes
