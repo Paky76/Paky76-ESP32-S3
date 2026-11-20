@@ -66,6 +66,18 @@ for pin,network in (("1",vbus),("2",gnd),("3",vbus),("5",v33)):
 for capacitor,rail in ((reg_in,vbus),(reg_out,v33),(bulk,vbus),(dec,v33)):
     assign(capacitor,"1",rail)
     assign(capacitor,"2",gnd)
+# ESP32-S3-WROOM-1 physical castellated pad mapping (candidate, verify with
+# exact module revision/datasheet before manufacturing).
+# ESP pad 2: 3V3, pad 1: GND, pad 3: EN; USB native D-/D+ pads 13/14.
+usb_dn=net("USB_DN")
+usb_dp=net("USB_DP")
+for pin in ("A7","B7"):
+    assign(usb,pin,usb_dn)
+for pin in ("A6","B6"):
+    assign(usb,pin,usb_dp)
+for pin,network in (("1",gnd),("2",v33),("13",usb_dn),("14",usb_dp)):
+    assign(esp,pin,network)
+# EN and remaining module GND pins deliberately not wired: schematic pending.
 # Route two short CC1/CC2 copper segments from the actual footprint pad centres.
 # This is deliberately only a partial routing experiment; clearance/DRC still required.
 def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=0.2):
