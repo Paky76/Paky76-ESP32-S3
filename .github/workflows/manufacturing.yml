@@ -31,10 +31,10 @@ jobs:
       - name: Export fabrication outputs
         run: |
           mkdir -p manufacturing/gerber manufacturing/drill manufacturing/assembly
-          kicad-cli pcb export gerbers -l F.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,F.Paste,B.Paste,Edge.Cuts -o manufacturing/gerber/ hardware/Paky76-RevA.kicad_pcb
-          kicad-cli pcb export drill -o manufacturing/drill/ hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb export gerbers -l F.Cu,In1.Cu,In2.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,F.Paste,B.Paste,Edge.Cuts -o manufacturing/gerber/ hardware/Paky76-RevA.kicad_pcb
+          kicad-cli pcb export drill --excellon-separate-th -o manufacturing/drill/ hardware/Paky76-RevA.kicad_pcb
           kicad-cli pcb export pos --format csv --units mm -o manufacturing/assembly/positions.csv hardware/Paky76-RevA.kicad_pcb
-          kicad-cli sch export bom -o manufacturing/assembly/bom.csv hardware/Paky76-RevA.kicad_sch
+          cp release/approved-bom.csv manufacturing/assembly/bom.csv
       - name: Upload manufacturing outputs
         uses: actions/upload-artifact@v4
         with:
