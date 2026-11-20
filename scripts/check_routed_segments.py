@@ -8,6 +8,7 @@ b=pcb.LoadBoard("hardware/Paky76-RevA-placement-study.kicad_pcb")
 fps={f.GetReference():f for f in b.GetFootprints()}
 expected=[
  ("R_EN","2","C_EN","1","ESP_EN"),
+ ("C_REG_OUT","1","C_DECOUPLE","1","+3V3"),
 ]
 tracks=list(b.GetTracks())
 for unsafe in ("USB_CC1","USB_CC2"):
@@ -26,4 +27,4 @@ for a,ap,z,zp,net in expected:
                (t.GetEnd()==pa.GetPosition() and t.GetStart()==pz.GetPosition()))]
     if not matching:sys.exit("Missing copper segment: %s.%s -> %s.%s"%(a,ap,z,zp))
     print("Copper present:",a,ap,"->",z,zp,net)
-print("Audited",len(expected),"EN copper segment; USB CC tracks intentionally removed after DRC shorts.")
+print("Audited",len(expected),"preliminary copper segments; USB CC tracks intentionally removed after DRC shorts.")
