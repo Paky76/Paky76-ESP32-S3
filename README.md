@@ -2,9 +2,9 @@
 
 Paky76 è un **assistente da scrivania interattivo** basato su ESP32-S3, con un display per occhi animati e menu, audio, una videocamera e una scocca stampabile in 3D. Il progetto esplora due modalità: azioni semplici eseguite sul dispositivo e risposte più articolate tramite un server JARVIS sulla rete locale.
 
-**Stato del progetto:** prototipo hardware **Rev.E**, scocca di prova **D1**. Il repository contiene i sorgenti KiCad e i file per richiedere un preventivo di assemblaggio. Le funzioni applicative, l'integrazione meccanica e il collaudo fisico sono ancora in sviluppo.
+**Stato del progetto:** prototipo hardware **Rev.F**, scocca di prova **D1**. Il repository contiene i sorgenti KiCad e i file per richiedere un preventivo di assemblaggio. Le funzioni applicative, l'integrazione meccanica e il collaudo fisico sono ancora in sviluppo.
 
-> **Rev.E con batteria tampone:** RTC RV-3028-C7 e portapila CR1220 sul lato inferiore sono integrati nello schema e nella PCB. Le verifiche KiCad sono completate. Disponibilità dei componenti, montaggio passante sul retro e prova del backup restano da confermare. [Istruzioni Rev.E](hardware/prototipi/reve-d1/LEGGIMI-PRIMA.md) · [Pacchetto Rev.E](hardware/prototipi/reve-d1/Paky76-RevE-D1-RTC-CR1220.zip) · [Datasheet Rev.E](hardware/prototipi/reve-d1/Paky76-Datasheet-RevE-D1.pdf) · [Manuale Rev.E](hardware/prototipi/reve-d1/Paky76-Manuale-Assemblaggio-RevE-D1.pdf)
+> **Rev.F:** RTC MCP7940N-I/SN, quarzo da 32,768 kHz e portapila CR1220. I file per il preventivo JLCPCB sono disponibili in due varianti, con o senza montaggio del portapila BT1. [Istruzioni Rev.F](hardware/prototipi/revf-d1/LEGGIMI-PRIMA.md) · [Pacchetto Rev.F](hardware/prototipi/revf-d1/Paky76-RevF-D1-JLCPCB.zip) · [Datasheet](hardware/prototipi/revf-d1/Paky76-Datasheet-RevF-D1.pdf) · [Manuale](hardware/prototipi/revf-d1/Paky76-Manuale-Assemblaggio-RevF-D1.pdf)
 
 ## Cosa potrà fare
 
