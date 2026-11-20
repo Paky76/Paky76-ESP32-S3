@@ -2,9 +2,9 @@
 
 Paky76 è un **assistente da scrivania interattivo** basato su ESP32-S3, con un display per occhi animati e menu, audio, una videocamera e una scocca stampabile in 3D. Il progetto esplora due modalità: azioni semplici eseguite sul dispositivo e risposte più articolate tramite un server JARVIS sulla rete locale.
 
-**Stato del progetto:** prototipo hardware **Rev.D**, scocca di prova **D1**. Il repository contiene i sorgenti KiCad e i file per richiedere un preventivo di assemblaggio. Le funzioni applicative, l'integrazione meccanica e il collaudo fisico sono ancora in sviluppo.
+**Stato del progetto:** prototipo hardware **Rev.E**, scocca di prova **D1**. Il repository contiene i sorgenti KiCad e i file per richiedere un preventivo di assemblaggio. Le funzioni applicative, l'integrazione meccanica e il collaudo fisico sono ancora in sviluppo.
 
-> **Batteria tampone:** la PCB Rev.D pubblicata è priva del circuito RTC e del portapila CR1220. La [specifica RTC](hardware/prototipi/revd-d1/Specifiche/Paky76-Specifica-RTC.md) descrive l'integrazione prevista. Per ordinare una scheda con batteria tampone servono schema, PCB, Gerber, BOM e CPL della revisione successiva.
+> **Rev.E con batteria tampone:** RTC RV-3028-C7 e portapila CR1220 sul lato inferiore sono integrati nello schema e nella PCB. Le verifiche KiCad sono completate. Disponibilità dei componenti, montaggio passante sul retro e prova del backup restano da confermare. [Istruzioni Rev.E](hardware/prototipi/reve-d1/LEGGIMI-PRIMA.md) · [Pacchetto Rev.E](hardware/prototipi/reve-d1/Paky76-RevE-D1-RTC-CR1220.zip) · [Datasheet Rev.E](hardware/prototipi/reve-d1/Paky76-Datasheet-RevE-D1.pdf) · [Manuale Rev.E](hardware/prototipi/reve-d1/Paky76-Manuale-Assemblaggio-RevE-D1.pdf)
 
 ## Cosa potrà fare
 
@@ -22,9 +22,9 @@ Gli **8 MB di PSRAM** sono destinati ai buffer e ai piccoli modelli locali, ment
 - **Scheda principale:** ESP32-S3-WROOM-1-N16R8, PCB a quattro strati da 66 × 42 mm, USB-C e pulsanti RESET e BOOT.
 - **Interfacce:** display SPI su J2, speaker su J3, modem LTE esterno opzionale su J4, alimentazione audio a 5 V su J5, microfono I²S su J6, camera e lettore microSD su J7. Il modem richiede alimentazione e cablaggio compatibili.
 - **Scocca D1:** sorgente OpenSCAD e STL per Cura e Artillery Sidewinder X1. Frontale, chassis, clip display e dima dei comandi sono disponibili per prove di montaggio.
-- **Revisione successiva:** slot microSD saldato sulla scheda, RTC con pila tampone CR1220, pannello a cinque tasti con LED RGB e interruttore generale. Nella Rev.D il lettore microSD è un modulo esterno e gli altri elementi di questa revisione restano da integrare.
+- **Sviluppi ancora previsti:** slot microSD saldato sulla scheda, pannello a cinque tasti con LED RGB e interruttore generale. La microSD si collega ancora come modulo esterno.
 
-## File e primo assemblaggio
+## File della Rev.D / D1 precedente
 
 | Risorsa | Contenuto |
 | --- | --- |
