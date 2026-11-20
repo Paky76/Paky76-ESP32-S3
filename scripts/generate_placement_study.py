@@ -116,9 +116,11 @@ def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=
     board.Add(track)
 route_pad_to_pad(usb,"A5",cc1,"1",cc1net)
 route_pad_to_pad(usb,"B5",cc2,"1",cc2net)
+# Additional short, physical EN RC interconnect; DRC must assess clearance.
+route_pad_to_pad(en_pullup,"2",en_cap,"1",en)
 # USB D+/D- and ESP32 pins are deliberately not connected until the schematic
 # and connector symbol/footprint pin-number mapping have been independently reviewed.
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: USB-C and provisional regulator pad nets assigned. Only two CC tracks; no validated schematic or regulator routing. USB and LCD physical compatibility unverified; do not fabricate.")
+print("WARNING: USB-C and provisional regulator pad nets assigned. Two CC tracks and one EN RC track; no validated schematic or regulator routing. USB and LCD physical compatibility unverified; do not fabricate.")
