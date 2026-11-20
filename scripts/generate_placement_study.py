@@ -56,9 +56,25 @@ assign(cc1,"1",cc1net)
 assign(cc1,"2",gnd)
 assign(cc2,"1",cc2net)
 assign(cc2,"2",gnd)
+# Route two short CC1/CC2 copper segments from the actual footprint pad centres.
+# This is deliberately only a partial routing experiment; clearance/DRC still required.
+def route_pad_to_pad(source,source_number,target,target_number,network,width_mm=0.2):
+    start=[p for p in source.Pads() if p.GetNumber()==source_number]
+    end=[p for p in target.Pads() if p.GetNumber()==target_number]
+    if len(start)!=1 or len(end)!=1:
+        raise RuntimeError("Ambiguous pad number in copper route")
+    track=pcb.PCB_TRACK(board)
+    track.SetStart(start[0].GetPosition())
+    track.SetEnd(end[0].GetPosition())
+    track.SetWidth(mm(width_mm))
+    track.SetLayer(pcb.F_Cu)
+    track.SetNet(network)
+    board.Add(track)
+route_pad_to_pad(usb,"A5",cc1,"1",cc1net)
+route_pad_to_pad(usb,"B5",cc2,"1",cc2net)
 # USB D+/D- and ESP32 pins are deliberately not connected until the schematic
 # and connector symbol/footprint pin-number mapping have been independently reviewed.
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: Only USB-C CC/GND/VBUS pad nets are assigned. No tracks, regulator or electrical schematic. USB and LCD physical compatibility unverified; do not fabricate.")
+print("WARNING: Only USB-C CC/GND/VBUS pad nets are assigned. Only two CC copper segments; no regulator or electrical schematic. USB and LCD physical compatibility unverified; do not fabricate.")
