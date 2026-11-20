@@ -16,6 +16,7 @@ on:
       - 'scripts/test_drc_short_gate.py'
       - 'scripts/check_lcd_header_nets.py'
       - 'scripts/export_assembly_draft.py'
+      - 'scripts/export_board_netlist.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 permissions:
@@ -53,6 +54,8 @@ jobs:
         run: /usr/bin/python3 scripts/check_boot_en_nets.py
       - name: Audit physical copper tracks
         run: /usr/bin/python3 scripts/check_routed_segments.py
+      - name: Export full physical pad-to-net inventory
+        run: /usr/bin/python3 scripts/export_board_netlist.py
       - name: Export provisional BOM and assembly centroids from native PCB
         run: /usr/bin/python3 scripts/export_assembly_draft.py
       - name: Export real footprint pad coordinates
