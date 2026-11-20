@@ -1,0 +1,36 @@
+name: KiCad hardware validation
+on:
+  push:
+    paths:
+      - 'hardware/**'
+      - '.github/workflows/hardware-validation.yml'
+  pull_request:
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install KiCad CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kicad
+          kicad-cli version
+      - name: Require real CAD sources
+        run: |
+          test -s hardware/Paky76-RevA.kicad_sch
+          test -s hardware/Paky76-RevA.kicad_pcb
+      - name: ERC
+        run: |
+          mkdir -p reports
+          kicad-cli sch erc --exit-code-violations -o reports/erc.txt hardware/Paky76-RevA.kicad_sch
+      - name: DRC
+        run: |
+          kicad-cli pcb drc --schematic-parity --exit-code-violations -o reports/drc.txt hardware/Paky76-RevA.kicad_pcb
+      - name: Upload validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kicad-validation-reports
+          path: reports/
+          if-no-files-found: ignore
