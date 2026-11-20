@@ -8,6 +8,8 @@ Paky76 è un assistente da scrivania con display, microfono, speaker e una video
 
 **Aggiornamento meccanico D2.1.** [Scarica gli STL aggiornati e il sorgente OpenSCAD](hardware/prototipi/revg-d2/Paky76-RevG-Scocca-D2.1.zip). Usa le [quote e le istruzioni D2.1](hardware/prototipi/revg-d2/Scocca-D2.1/MONTAGGIO-D2.1.md) per stampare la scocca corrente. Il pacchetto di fabbricazione Rev.G include la scocca D2 storica.
 
+**Rev.H / D3.** Nuova scheda principale rettangolare da 83,25 × 70 mm e scocca adattata. [Scarica il pacchetto ordine Rev.H / D3](hardware/prototipi/revh-d3/Paky76-RevH-D3-Pacchetto-Ordine.zip) o consulta le [istruzioni](hardware/prototipi/revh-d3/LEGGIMI-PRIMA.md). La Rev.G / D2.1 resta documentata qui sotto.
+
 ## Hardware
 
 | Gruppo | Dotazione |
