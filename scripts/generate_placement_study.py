@@ -92,11 +92,10 @@ for pin,network in (("1",gnd),("2",v33),("13",usb_dn),("14",usb_dp)):
     assign(esp,pin,network)
 # EN and remaining module GND pins deliberately not wired: schematic pending.
 # Native ESP32-S3 module pad numbers for the proposed ST7789 SPI bus.
-# LCD connector pins remain UNASSIGNED until the exact module pin order is verified.
+# Provisional 8-pin ST7789 breakout header: GND,VCC,SCL,SDA,RES,DC,CS,BLK.\n# WARNING: modules differ; this pin order is an ASSUMPTION, not a verified part.
 lcd_signals={"LCD_MOSI":"19","LCD_SCLK":"20","LCD_CS":"18",
              "LCD_DC":"17","LCD_RST":"12","LCD_BL":"7"}
-for signal,pin in lcd_signals.items():
-    assign(esp,pin,net(signal))
+lcd_nets={}\nfor signal,pin in lcd_signals.items():\n    lcd_nets[signal]=net(signal)\n    assign(esp,pin,lcd_nets[signal])\nfor pin,network in (("1",gnd),("2",v33),("3",lcd_nets["LCD_SCLK"]),\n                    ("4",lcd_nets["LCD_MOSI"]),("5",lcd_nets["LCD_RST"]),\n                    ("6",lcd_nets["LCD_DC"]),("7",lcd_nets["LCD_CS"]),\n                    ("8",lcd_nets["LCD_BL"])):\n    assign(lcd,pin,network)
 # Pad 41 is a multi-aperture exposed GND pad (12 small plated holes).
 # assign() deliberately applies the net to ALL pads sharing number 41.
 for pin in ("40","41"):
@@ -124,4 +123,4 @@ route_pad_to_pad(en_pullup,"2",en_cap,"1",en)
 # These are physical placements, NOT connected electrically.
 pcb.SaveBoard(OUT,board)
 print("Created",OUT,"footprints:",[(f.GetReference(),f.GetFPID().GetLibItemName()) for f in board.GetFootprints()])
-print("WARNING: USB-C and provisional regulator pad nets assigned. Only one EN RC track; USB CC tracks removed due to verified shorts; no validated schematic or regulator routing. USB and LCD physical compatibility unverified; do not fabricate.")
+print("WARNING: USB-C and provisional regulator pad nets assigned. Only one EN RC track; USB CC tracks removed due to verified shorts; no validated schematic or regulator routing. USB and LCD header order provisional and physical compatibility unverified; do not fabricate.")
