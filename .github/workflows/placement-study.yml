@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'scripts/generate_placement_study.py'
+      - 'scripts/check_placement_geometry.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 jobs:
@@ -18,6 +19,8 @@ jobs:
           /usr/bin/python3 -c 'import pcbnew; print(pcbnew.GetBuildVersion())'
       - name: Generate native PCB placement study
         run: /usr/bin/python3 scripts/generate_placement_study.py
+      - name: Check physical footprint envelopes
+        run: /usr/bin/python3 scripts/check_placement_geometry.py
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
