@@ -10,6 +10,10 @@ Paky76 è un assistente da scrivania con display, microfono, speaker e una video
 
 **Rev.H / D3.** Nuova scheda principale rettangolare da 83,25 × 70 mm e scocca adattata. [Scarica il pacchetto ordine Rev.H / D3](hardware/prototipi/revh-d3/Paky76-RevH-D3-Pacchetto-Ordine.zip) o consulta le [istruzioni](hardware/prototipi/revh-d3/LEGGIMI-PRIMA.md). La Rev.G / D2.1 resta documentata qui sotto.
 
+## Variante vocale su Raspberry Pi
+
+[Prototipo Paky76 Pi](software/paky76-pi/README.md): acquisizione audio su richiesta, trascrizione italiana, modello Qwen locale e sintesi vocale Piper. Include installazione e avvio sul Pi. Verifiche software con componenti simulati completate; prova sul CM4 e integrazione con l'hardware da eseguire.
+
 ## Hardware
 
 | Gruppo | Dotazione |
