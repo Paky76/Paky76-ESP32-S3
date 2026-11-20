@@ -16,7 +16,7 @@ with (out/"bom-PROVISIONAL.csv").open("w",newline="",encoding="utf-8") as f:
     w=csv.writer(f)
     w.writerow(["Reference","Value","Footprint","MPN","Procurement status","Assembly status"])
     for fp in parts:
-        w.writerow([fp.GetReference(),fp.GetValue(),fp.GetFPID().Format(),"",
+        w.writerow([fp.GetReference(),fp.GetValue(),fp.GetFPID().GetLibItemName(),"",
                     "UNVERIFIED - MPN REQUIRED","NOT APPROVED FOR ASSEMBLY"])
 with (out/"centroids-PROVISIONAL.csv").open("w",newline="",encoding="utf-8") as f:
     w=csv.writer(f)
