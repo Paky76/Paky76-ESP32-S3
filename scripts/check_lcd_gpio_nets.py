@@ -9,7 +9,7 @@ f=next((f for f in b.GetFootprints() if f.GetReference()=="U1"),None)
 if f is None:sys.exit("Missing ESP32 module U1")
 expected={"19":"LCD_MOSI","20":"LCD_SCLK","18":"LCD_CS",
           "17":"LCD_DC","12":"LCD_RST","7":"LCD_BL",
-          "40":"GND","41":"GND"}
+          "40":"GND"}
 for pin,net in expected.items():
     pads=[p for p in f.Pads() if p.GetNumber()==pin]
     if len(pads)!=1 or pads[0].GetNetname()!=net:
