@@ -1,0 +1,28 @@
+reference,signal,connection,design_note,status
+U1,3V3,+3V3,ESP32-S3-WROOM-1 supply with local decoupling,REQUIRES_SCHEMATIC
+U1,GND,GND,All module grounds to continuous reference plane,REQUIRES_SCHEMATIC
+U1,EN,CHIP_EN,Pull-up to 3V3 and reset pushbutton to GND,REQUIRES_SCHEMATIC
+U1,GPIO0,BOOT,Pull-up and boot pushbutton to GND; check strapping,REQUIRES_SCHEMATIC
+U1,GPIO19,USB_DN,Native USB differential data negative,REQUIRES_SCHEMATIC
+U1,GPIO20,USB_DP,Native USB differential data positive,REQUIRES_SCHEMATIC
+U1,GPIO11,LCD_DIN,ST7789 SPI data,REQUIRES_SCHEMATIC
+U1,GPIO12,LCD_CLK,ST7789 SPI clock,REQUIRES_SCHEMATIC
+U1,GPIO10,LCD_CS,ST7789 chip select,REQUIRES_SCHEMATIC
+U1,GPIO9,LCD_DC,ST7789 data-command,REQUIRES_SCHEMATIC
+U1,GPIO8,LCD_RST,ST7789 reset,REQUIRES_SCHEMATIC
+U1,GPIO7,LCD_BL_CTRL,Backlight drive only after electrical verification,UNVERIFIED
+J_USB,VBUS,USB_5V,USB-C 5V power input,REQUIRES_SCHEMATIC
+J_USB,CC1,CC1_RD,5.1k pulldown to GND for sink-only port,REQUIRES_SCHEMATIC
+J_USB,CC2,CC2_RD,Separate 5.1k pulldown to GND,REQUIRES_SCHEMATIC
+J_USB,D+,USB_DP,Verify connector A6/B6 pairing,REQUIRES_SCHEMATIC
+J_USB,D-,USB_DN,Verify connector A7/B7 pairing,REQUIRES_SCHEMATIC
+U_REG,VIN,USB_5V,3.3V regulator exact MPN not yet selected,UNSELECTED
+U_REG,VOUT,+3V3,Regulator peak load and capacitor stability to verify,UNSELECTED
+J_LCD,VCC,DISPLAY_VCC,Verify module voltage requirement and exact connector pin numbering,UNVERIFIED
+J_LCD,GND,GND,Display common ground,UNVERIFIED
+J_LCD,DIN,LCD_DIN,External ST7789 data,UNVERIFIED
+J_LCD,CLK,LCD_CLK,External ST7789 clock,UNVERIFIED
+J_LCD,CS,LCD_CS,External ST7789 chip select,UNVERIFIED
+J_LCD,DC,LCD_DC,External ST7789 data-command,UNVERIFIED
+J_LCD,RST,LCD_RST,External ST7789 reset,UNVERIFIED
+J_LCD,BL,LCD_BL_CTRL,May require transistor or driver; no direct GPIO drive approval,UNVERIFIED
