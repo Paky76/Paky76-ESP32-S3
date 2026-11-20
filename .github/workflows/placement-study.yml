@@ -28,6 +28,8 @@ jobs:
           sudo apt-get install -y kicad
           kicad-cli version
           /usr/bin/python3 -c 'import pcbnew; print(pcbnew.GetBuildVersion())'
+      - name: Compile-check all Python CAD scripts
+        run: python3 -m compileall -q scripts
       - name: Regression-test KiCad DRC short gate
         run: python3 scripts/test_drc_short_gate.py
       - name: Generate native PCB placement study
