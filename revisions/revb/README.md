@@ -29,3 +29,5 @@ Via Wi-Fi il firmware usa HTTP Basic su rete locale. Usare la rete temporanea pr
 Il workflow **Rev.B engineering validation** ripete i test della dashboard, la generazione del modello OpenSCAD e la compilazione ESP32-S3. Gli esiti e i requisiti per il rilascio sono descritti in [PREPRODUZIONE.md](PREPRODUZIONE.md).
 
 Vedi [la specifica hardware](hardware-revb.md) e [lo studio volumetrico](Paky76-RevB-ingombri.scad).
+
+Per la preparazione Eurocircuits, vedi [schema di banco, esportazione e revisione DFM](EUROCIRCUITS.md).
