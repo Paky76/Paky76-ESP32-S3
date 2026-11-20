@@ -10,6 +10,9 @@ expected=[
  ("R_EN","2","C_EN","1","ESP_EN"),
 ]
 tracks=list(b.GetTracks())
+for unsafe in ("USB_CC1","USB_CC2"):
+    if any(t.GetNetname()==unsafe for t in tracks):
+        sys.exit("Unsafe straight USB CC routing reintroduced: "+unsafe)
 for a,ap,z,zp,net in expected:
     try:
         pa=next(p for p in fps[a].Pads() if p.GetNumber()==ap)
