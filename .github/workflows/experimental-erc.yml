@@ -1,0 +1,36 @@
+name: Experimental KiCad schematic ERC
+on:
+  push:
+    paths:
+      - 'hardware/*.kicad_sch'
+      - '.github/workflows/experimental-erc.yml'
+  workflow_dispatch:
+jobs:
+  erc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install KiCad CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kicad
+          kicad-cli version
+      - name: ERC for actual experimental schematic sources
+        shell: bash
+        run: |
+          mkdir -p reports
+          failed=0
+          for f in hardware/*-prototype.kicad_sch hardware/esp32-logical-interface.kicad_sch; do
+            [ -f "$f" ] || continue
+            base="$(basename "$f" .kicad_sch)"
+            echo "Checking $f"
+            kicad-cli sch erc --exit-code-violations -o "reports/${base}-erc.txt" "$f" || failed=1
+          done
+          exit "$failed"
+      - name: Publish experimental ERC reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: experimental-schematic-erc-reports
+          path: reports/
+          if-no-files-found: ignore
