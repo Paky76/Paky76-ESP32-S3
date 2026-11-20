@@ -17,6 +17,7 @@ on:
       - 'scripts/check_lcd_header_nets.py'
       - 'scripts/export_assembly_draft.py'
       - 'scripts/export_board_netlist.py'
+      - 'scripts/manufacturing_readiness.py'
       - '.github/workflows/placement-study.yml'
   workflow_dispatch:
 permissions:
@@ -71,6 +72,9 @@ jobs:
           /usr/bin/python3 scripts/summarize_drc.py preview/placement-study-drc.txt
       - name: Reject physical copper shorts detected by KiCad
         run: /usr/bin/python3 scripts/check_drc_shorts.py preview/placement-study-drc.txt
+      - name: Publish manufacturing readiness blockers (expected NOT READY)
+        run: |
+          /usr/bin/python3 scripts/manufacturing_readiness.py --drc preview/placement-study-drc.txt || test $? -eq 1
       - name: Export SVG placement preview
         run: |
           mkdir -p preview
