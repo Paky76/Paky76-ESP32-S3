@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'hardware/**'
+      - 'release/engineering-approval.txt'
       - '.github/workflows/manufacturing.yml'
 jobs:
   fabrication:
@@ -15,15 +15,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y kicad
           kicad-cli version
-      - name: Require actual source files
+      - name: Require actual approved source files
         run: |
           test -s hardware/Paky76-RevA.kicad_sch
           test -s hardware/Paky76-RevA.kicad_pcb
+          test -s release/approved-bom.csv
+          test -s release/engineering-approval.txt
       - name: Electrical and layout checks
         run: |
           mkdir -p reports
           kicad-cli sch erc --exit-code-violations -o reports/erc.txt hardware/Paky76-RevA.kicad_sch
           kicad-cli pcb drc --schematic-parity --exit-code-violations -o reports/drc.txt hardware/Paky76-RevA.kicad_pcb
+      - name: Fail-closed release readiness gate
+        run: python3 scripts/manufacturing_readiness.py --drc reports/drc.txt --report reports/manufacturing-readiness.txt
       - name: Export fabrication outputs
         run: |
           mkdir -p manufacturing/gerber manufacturing/drill manufacturing/assembly
