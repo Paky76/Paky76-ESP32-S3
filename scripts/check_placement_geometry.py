@@ -24,13 +24,19 @@ left,right,bottom,top=min(xs),max(xs),min(ys),max(ys)
 print("Board bounds (mm):",*[round(pcb.ToMM(v),3) for v in (left,bottom,right,top)])
 failed=False
 for f in footprints:
-    bb=f.GetBoundingBox(False,False)
+    bb=f.GetBoundingBox(False,False) # Includes reference/value text and graphics; advisory only
     # Bounding box includes silkscreen, not just copper; conservative preliminary test.
     x1,y1,x2,y2=bb.GetLeft(),bb.GetTop(),bb.GetRight(),bb.GetBottom()
     outside=x1<left or y1<bottom or x2>right or y2>top
     print(f.GetReference(),str(f.GetFPID().GetLibItemName()),
           "bounds:",*[round(pcb.ToMM(v),2) for v in (x1,y1,x2,y2)],
           "OUTSIDE_BOARD" if outside else "inside")
-    if outside: failed=True
-if failed: sys.exit("Some footprint geometry extends outside the board. Rework placement.")
-print("Preliminary placement envelope check passed; no electrical connections or DRC verified.")
+    if outside:
+        print('  NOTE: footprint overall bounding box may include reference/value text; pad-only check follows')
+    for pad in f.Pads():
+        pb=pad.GetBoundingBox()
+        if pb.GetLeft()<left or pb.GetTop()<bottom or pb.GetRight()>right or pb.GetBottom()>top:
+            print('  PAD OUTSIDE:',pad.GetNumber())
+            failed=True
+if failed: sys.exit("Copper pads extend outside board. Rework placement.")
+print("Copper-pad board envelope check passed; body/courtyard and assembly clearance still require review. No electrical DRC verified.")
