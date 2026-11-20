@@ -84,3 +84,29 @@ test('USB framing, setup key, hotspot recovery and disconnect', async () => {
   assert.ok(closed);
   assert.equal(elements.save.disabled, true);
 });
+
+test('gateway request polls the firmware and displays its response', async () => {
+  const requests = [];
+  const { elements } = launch('/setup', {
+    setTimeout: callback => setImmediate(callback),
+    fetch: async (_url, opts) => {
+      const body = JSON.parse(opts.body);
+      requests.push(body);
+      let result = { ...status, aiReady: true };
+      if (body.cmd === 'ask_ai') result = { ok: true, id: 37, pending: true };
+      if (body.cmd === 'ai_result') result = { ok: true, pending: false, text: 'Risposta del modello.' };
+      return { ok: true, json: async () => result };
+    },
+  });
+  await flush();
+  assert.equal(elements.onlinechoice.disabled, false);
+  elements.aimode.value = 'gateway';
+  elements.prompt.value = 'Ciao Paky';
+  await elements.basic.onsubmit(event);
+  assert.deepEqual(requests.slice(1), [
+    { cmd: 'ask_ai', prompt: 'Ciao Paky' },
+    { cmd: 'ai_result', id: 37 },
+  ]);
+  assert.equal(elements.answer.textContent, 'Risposta del modello.');
+  assert.equal(elements.ask.disabled, false);
+});

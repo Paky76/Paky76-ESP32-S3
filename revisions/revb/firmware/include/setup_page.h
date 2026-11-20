@@ -41,8 +41,9 @@ dl{display:grid;grid-template-columns:120px 1fr;gap:7px;margin:10px 0 0}dd{margi
 <p id="notice" role="status" aria-live="polite"></p>
 </form>
 <section>
-<h2>Prova comandi offline</h2>
-<form id="basic"><label for="prompt">Comando breve</label><input id="prompt" maxlength="160" required placeholder="Per esempio: chi sei?">
+<h2>Parla con Paky76</h2>
+<form id="basic"><label for="aimode">Modalità</label><select id="aimode"><option value="basic">Comandi offline</option><option id="onlinechoice" value="gateway" disabled>Modello via gateway HTTPS</option></select>
+<label for="prompt">Messaggio</label><input id="prompt" maxlength="160" required placeholder="Per esempio: chi sei?">
 <div class="actions"><button id="ask" disabled>Chiedi a Paky76</button></div></form>
 <p id="answer" aria-live="polite"></p>
 </section>
@@ -96,7 +97,7 @@ function show(s){
  el("lte").textContent=s.lte||"Non disponibile";el("apn").value=s.apn||"";
  el("open").checked=!!s.open;if(s.ip)el("ip").value=s.ip;
  el("volume").value=s.volume??45;el("volumeout").textContent=el("volume").value+"%";
- el("save").disabled=false;el("tone").disabled=false;el("ask").disabled=false;el("reopen").hidden=mode!=="usb";
+ el("save").disabled=false;el("tone").disabled=false;el("ask").disabled=false;el("reopen").hidden=mode!=="usb";el("onlinechoice").disabled=!s.aiReady;
 }
 async function refresh(){show(await request("status"));}
 el("usb").onclick=async()=>{
@@ -130,13 +131,27 @@ el("settings").onsubmit=async e=>{
  el("password").value="";notice("Impostazioni salvate. Attendi la connessione, poi aggiorna lo stato per leggere il nuovo IP.");
  }catch(e){notice(e.message,true);}finally{el("save").disabled=false;}
 };
+el("aimode").onchange=()=>{el("prompt").maxLength=el("aimode").value==="gateway"?300:160;};
 el("basic").onsubmit=async e=>{
  e.preventDefault();
  try{
-  const s=await request("ask_basic",{prompt:el("prompt").value});
+  el("ask").disabled=true;
+  const online=el("aimode").value==="gateway";
+  let s=await request(online?"ask_ai":"ask_basic",{prompt:el("prompt").value});
   if(!s.ok)throw Error(s.error);
+  if(online){
+   const id=s.id;
+   el("answer").textContent="Richiesta al modello in corso…";
+   for(let j=0;s.pending&&j<95;j++){
+    await new Promise(resolve=>setTimeout(resolve,500));
+    s=await request("ai_result",{id});
+    if(!s.ok)throw Error(s.error);
+   }
+   if(s.pending)throw Error("Tempo di attesa superato.");
+   if(s.aiError)throw Error(s.aiError);
+  }
   el("answer").textContent=s.text;
- }catch(error){el("answer").textContent=error.message;}
+ }catch(error){el("answer").textContent=error.message;}finally{el("ask").disabled=!(mode==="wifi"||mode==="usb");}
 };
 if(onDevice)refresh().catch(e=>notice(e.message,true));
 else notice("Collega Paky76 via USB oppure apri l’indirizzo IP che compare sul display.");

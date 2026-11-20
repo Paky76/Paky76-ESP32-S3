@@ -9,6 +9,7 @@
 #include <cctype>
 #include <cmath>
 #include "setup_page.h"
+#include "gateway_client.h"
 
 namespace {
 constexpr size_t FRAME_LIMIT = 768;
@@ -170,6 +171,57 @@ String askBasic(String prompt) {
   return "Modalità di base. Usa ciao, chi sei o stato rete.";
 }
 
+struct AiJob {
+  uint32_t id;
+  String prompt;
+  String result;
+  String error;
+};
+QueueHandle_t aiFinished = nullptr;
+uint32_t aiPending = 0;
+AiJob* aiResult = nullptr;
+
+void askWorker(void* data) {
+  auto* job = static_cast<AiJob*>(data);
+  job->result = paky_gateway::ask(job->prompt, job->error);
+  xQueueSend(aiFinished, &job, portMAX_DELAY);
+  vTaskDelete(nullptr);
+}
+
+const char* aiCommand(const String& cmd, const JsonDocument& request, JsonDocument& reply) {
+  if (cmd == "ask_ai") {
+    String prompt = request["prompt"] | "";
+    prompt.trim();
+    if (prompt.isEmpty() || prompt.length() > 300) return "Prompt da 1 a 300 byte.";
+    if (!paky_gateway::configured()) return "Gateway HTTPS da configurare nel firmware.";
+    if (!aiFinished || aiPending) return "Attendi la risposta in corso.";
+    uint32_t id = esp_random();
+    if (id == 0) id = 1;
+    auto* job = new AiJob{id, prompt, {}, {}};
+    if (!job) return "Memoria insufficiente.";
+    if (xTaskCreate(askWorker, "paky-ai", 12288, job, 1, nullptr) != pdPASS) {
+      delete job;
+      return "Impossibile avviare la richiesta.";
+    }
+    delete aiResult;
+    aiResult = nullptr;
+    aiPending = id;
+    reply["id"] = id;
+    reply["pending"] = true;
+    return nullptr;
+  }
+  const uint32_t requested = request["id"] | 0U;
+  if (requested && requested == aiPending) {
+    reply["pending"] = true;
+    return nullptr;
+  }
+  if (!aiResult || aiResult->id != requested) return "Richiesta scaduta o sconosciuta.";
+  reply["pending"] = false;
+  if (!aiResult->error.isEmpty()) reply["aiError"] = aiResult->error;
+  else reply["text"] = aiResult->result;
+  return nullptr;
+}
+
 String handle(const String& frame, bool usb) {
   JsonDocument request;
   JsonDocument reply;
@@ -182,6 +234,8 @@ String handle(const String& frame, bool usb) {
     if (cmd == "save") error = saveSettings(request);
     else if (cmd == "tone") {
       if (!request["volume"].is<int>() || !playTestTone(request["volume"].as<int>())) error = "Tono non riuscito.";
+    } else if (cmd == "ask_ai" || cmd == "ai_result") {
+      error = aiCommand(cmd, request, reply);
     } else if (cmd == "ask_basic") {
       const String prompt = request["prompt"] | "";
       if (prompt.isEmpty() || prompt.length() > 160) error = "Prompt da 1 a 160 byte.";
@@ -202,6 +256,7 @@ String handle(const String& frame, bool usb) {
     reply["ap"] = apActive ? apName : "";
     reply["apIp"] = apActive ? WiFi.softAPIP().toString() : "";
     if (usb) reply["setupKey"] = setupKey;
+    reply["aiReady"] = paky_gateway::configured();
     reply["lte"] = "Modem non integrato nel firmware di configurazione";
   }
   String encoded;
@@ -274,6 +329,8 @@ void setup() {
   WiFi.persistent(false);
   WiFi.setAutoReconnect(true);
   connectWifi();
+  paky_gateway::startClock();
+  aiFinished = xQueueCreate(1, sizeof(AiJob*));
   const char* headers[] = {"X-Paky-Setup"};
   server.collectHeaders(headers, 1);
   server.on("/", HTTP_GET, [] {
@@ -298,6 +355,11 @@ void setup() {
 }
 
 void loop() {
+  AiJob* finished = nullptr;
+  if (aiFinished && xQueueReceive(aiFinished, &finished, 0) == pdPASS) {
+    aiResult = finished;
+    aiPending = 0;
+  }
   processUsb();
   server.handleClient();
   const unsigned long now = millis();
