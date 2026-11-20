@@ -29,6 +29,7 @@ Gli **8 MB di PSRAM** sono destinati ai buffer e ai piccoli modelli locali, ment
 | [Istruzioni del prototipo](hardware/prototipi/revd-d1/LEGGIMI-PRIMA.md) | Stato della revisione, caricamento JLCPCB e stampa |
 | [Schema, PCB e file JLCPCB](hardware/prototipi/revd-d1/PCB-RevD/) | KiCad, Gerber, BOM, CPL, report ERC/DRC e cablaggio |
 | [File di stampa 3D](hardware/prototipi/revd-d1/Stampa-3D/) | OpenSCAD e STL |
+| [Datasheet PDF](hardware/prototipi/revd-d1/Paky76-Datasheet-RevD-D1.pdf) | Specifiche, alimentazione, pinout e stato di validazione |
 | [Manuale di assemblaggio PDF](hardware/prototipi/revd-d1/Paky76-Manuale-Assemblaggio-D1.pdf) | Sequenza di montaggio, cablaggio e viste CAD |
 | [Specifiche RTC e pannello](hardware/prototipi/revd-d1/Specifiche/) | Requisiti e collegamenti previsti per la prossima revisione |
 | [Pacchetto completo Rev.D / D1](hardware/prototipi/revd-d1/Paky76-Pacchetto-Prototipo-RevD-D1.zip) | Tutti i file del prototipo in un archivio |
