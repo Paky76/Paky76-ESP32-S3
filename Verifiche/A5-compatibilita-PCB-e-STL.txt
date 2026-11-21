@@ -1,0 +1,13 @@
+Principale: 16 file identici byte per byte alla A4.1.
+Frontale: 12 file identici byte per byte alla A4.1.
+JLCPCB: 6 file identici byte per byte alla A4.1.
+bezel.stl: mesh chiusa, ingombro [49.0, 54.0, 18.0] mm.
+button.stl: mesh chiusa, ingombro [4.1, 4.1, 4.35] mm.
+cell_gauge.stl: mesh chiusa, ingombro [37.0, 21.0, 6.0] mm.
+fit_check.stl: mesh chiusa, ingombro [12.0, 12.0, 2.0] mm.
+front_gauge.stl: mesh chiusa, ingombro [43.0, 42.0, 1.6] mm.
+main_gauge.stl: mesh chiusa, ingombro [32.0, 39.0, 1.6] mm.
+oled_gauge.stl: mesh chiusa, ingombro [34.0, 47.0, 1.2] mm.
+switch_gauge.stl: mesh chiusa, ingombro [26.0, 10.0, 2.0] mm.
+tray.stl: mesh chiusa, ingombro [49.0, 61.5, 23.6] mm.
+Cavità nominale 45 × 50 mm per PCB OLED 34 × 47 mm. Distanza nominale vetro-falda 0,6 mm sul modello. Cablaggio, corsa pulsanti, passi fori OLED e chiusura da controllare a secco.

@@ -1,0 +1,1 @@
+Test C++ host con Wire, GPIO, tempo e U8g2 simulati: scansione con retry, OLED 0x3D, tasti sinistro/destro/simultanei, area di disegno 128 × 128, spegnimento e risveglio superati. Firma del costruttore riscontrata nel sorgente U8g2. Installazione core Arduino ESP32 bloccata dalla rete del runner. Compilazione target e collaudo fisico restano da eseguire.

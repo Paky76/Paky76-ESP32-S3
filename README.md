@@ -1,64 +1,61 @@
-# Paky76 ESP32-S3
+# Paky76 Mini A5
 
-Paky76 è un assistente da scrivania con display, microfono, speaker e una videocamera opzionale. Il progetto prevede comandi semplici offline e risposte più articolate tramite JARVIS e Ollama su un PC o un server della rete locale.
+Dispositivo portatile con due tasti laterali e un volto animato su **OLED SH1107G-02 da 1,5″, 128 × 128, I²C a 4 pin**. La A5 usa la **PCB principale A4** e il **frontale A1** già ordinati nella configurazione A4.1. Firmware, cablaggio, scocca e figure sono riferiti all'OLED quadrato.
 
-**Revisione attuale Rev.G / D2.** Due PCB assemblabili e una scocca stampabile. Entrambe le schede hanno superato i controlli elettrici e di layout in KiCad. Il pacchetto è pronto per il preventivo del primo lotto. Il firmware applicativo, il collaudo fisico e l'accettazione del montaggio da parte di JLCPCB restano da completare.
+![Esploso A5 ricavato dagli STL](Documentazione/Figure/A5-Esploso.png)
 
-[Pacchetto JLCPCB](hardware/prototipi/revg-d2/Paky76-RevG-D2-JLCPCB.zip) · [Istruzioni di caricamento](hardware/prototipi/revg-d2/LEGGIMI-PRIMA.md) · [Manuale di assemblaggio](hardware/prototipi/revg-d2/Paky76-Manuale-Assemblaggio-RevG-D2.pdf) · [Datasheet](hardware/prototipi/revg-d2/Paky76-Datasheet-RevG-D2.pdf) · [File di stampa 3D](hardware/prototipi/revg-d2/Scocca-D2/)
+## Documentazione
 
-**Aggiornamento meccanico D2.1.** [Scarica gli STL aggiornati e il sorgente OpenSCAD](hardware/prototipi/revg-d2/Paky76-RevG-Scocca-D2.1.zip). Usa le [quote e le istruzioni D2.1](hardware/prototipi/revg-d2/Scocca-D2.1/MONTAGGIO-D2.1.md) per stampare la scocca corrente. Il pacchetto di fabbricazione Rev.G include la scocca D2 storica.
-
-**Rev.H / D3.** Nuova scheda principale rettangolare da 83,25 × 70 mm e scocca adattata. [Scarica il pacchetto ordine Rev.H / D3](hardware/prototipi/revh-d3/Paky76-RevH-D3-Pacchetto-Ordine.zip) o consulta le [istruzioni](hardware/prototipi/revh-d3/LEGGIMI-PRIMA.md). La Rev.G / D2.1 resta documentata qui sotto.
-
-## Paky76 Mini A4.1
-
-Variante portatile con XIAO ESP32-S3, OLED SH1106, due pulsanti e interruttore batteria. La scheda principale è A4 e il frontale è A1. Il pacchetto comprende i sorgenti e i file per il preventivo del primo campione. Il montaggio e la ricarica vanno collaudati sul campione.
-
-- [Progetto completo ZIP](hardware/prototipi/mini-a4.1/Paky76-Mini-A4.1-Progetto-Documentato.zip)
-- [Manuale di assemblaggio](hardware/prototipi/mini-a4.1/Documentazione/Paky76-Mini-A4.1-Manuale-Assemblaggio.pdf)
-- [Schemi di collegamento](hardware/prototipi/mini-a4.1/Documentazione/Paky76-Mini-A4.1-Schemi-Collegamento.pdf)
-- [Datasheet tecnico](hardware/prototipi/mini-a4.1/Documentazione/Paky76-Mini-A4.1-Datasheet.pdf)
-- [Istruzioni e distinta](hardware/prototipi/mini-a4.1/LEGGIMI.md)
-
-## Variante vocale su Raspberry Pi
-
-[Prototipo Paky76 Pi](software/paky76-pi/README.md): acquisizione audio su richiesta, trascrizione italiana, modello Qwen locale e sintesi vocale Piper. Include installazione e avvio sul Pi. Verifiche software con componenti simulati completate; prova sul CM4 e integrazione con l'hardware da eseguire.
-
-## Hardware
-
-| Gruppo | Dotazione |
+| Documento | Contenuto |
 | --- | --- |
-| Scheda principale | ESP32-S3-WROOM-1-N16R8, USB-C, RESET e BOOT, slot microSD J9 sul retro, RTC MCP7940N con batteria tampone CR1220 |
-| Interfacce | Display SPI, speaker, microfono I²S, una videocamera SPI esterna, espansione LTE opzionale |
-| Pannello comandi | Quattro frecce e OK su una PCB dedicata, collegata in I²C. LED RGB sul frontale, pilotato dal pannello |
-| Alimentazione | Ingresso da 5 V e interruttore generale cablato nella scocca |
-| Scocca D2 | Frontale, chassis, clip del display e copritasto in formato STL, con sorgente OpenSCAD |
+| [Manuale illustrato PDF](Documentazione/Paky76-Mini-A5-Manuale-Assemblaggio.pdf) | Stampa, montaggio, orientamento e collaudo |
+| [Schemi di collegamento PDF](Documentazione/Paky76-Mini-A5-Schemi-Collegamento.pdf) | PCB, OLED, interruttore e batteria |
+| [Datasheet PDF](Documentazione/Paky76-Mini-A5-Datasheet.pdf) | Specifiche e tavole quotate |
+| [Figure e quote](Documentazione/Figure/) | Esploso, guscio, cornice, finestra, fori OLED e profilo |
+| [Guida operativa](LEGGIMI.md) | Stampa, fissaggi, cablaggio, firmware e prove |
 
-## Funzioni previste
+## Hardware e distinta per un dispositivo
 
-- **Offline.** Menu sul display, timer, volume e comandi brevi. La flash da 16 MB ospita il firmware, la PSRAM da 8 MB serve per l'elaborazione e la microSD conserva file e modelli compatibili. Un piccolo modello per comandi o riconoscimento locale va ancora selezionato e provato. La capacità della microSD da sola non determina quali modelli possono girare.
-- **Sulla rete locale.** L'ESP32 può fare da terminale per un backend JARVIS e un LLM eseguito tramite Ollama. L'integrazione applicativa è in sviluppo.
-- **Controlli fisici.** Frecce e OK per il menu, LED multicolore per stato e avvisi, orologio mantenuto a dispositivo spento tramite CR1220.
+| Qtà | Parte | Specifica |
+| ---: | --- | --- |
+| 1 | [Principale A4](Principale/) | 32 × 39 mm; USB-C, ingresso LiPo e pull-up I²C |
+| 1 | [Frontale A1](Frontale/) | 43 × 42 mm; due tasti laterali e uscita OLED |
+| 1 | U1 | Seeed XIAO ESP32-S3 113991114, C20467913 |
+| 2 | J1 | JST SH 6 poli BM06B-SRSS-TB, C160392 |
+| 1 | J2 frontale | JST SH 4 poli BM04B-SRSS-TB, C160390 |
+| 2 | R1/R2 | 4,7 kΩ SMD 0603, C99782 |
+| 2 | SW1/SW2 | Panasonic EVQP7A01P, C79167 |
+| 1 | S1 | Nidec MFS201N-Z, a slitta sul fianco |
+| 1 | OLED | SH1107G-02; PCB 34 × 47 mm; spessore massimo dichiarato 11,3 mm; area visibile 28,86 × 28,86 mm |
+| 1 | Batteria | LiPo protetta 1S, 3,7 V nominali, 4,2 V a fine carica. Riferimento 350 mAh |
+| 1 ciascuno | Cavetti | JST SH 6 vie pin per pin, JST SH 4 vie con fili lato OLED, contropresa batteria, cavo USB-C dati |
+| Secondo montaggio | Fissaggi e accessori | Viti M2 da scegliere a secco, guaina isolante, ritenzione morbida cella, antenna XIAO se assente |
 
-## Preventivo
+I [file JLCPCB](JLCPCB/) contengono Gerber, BOM e CPL per ciascuna scheda. Per PCB nudi, U1 richiede anche la saldatura dei due pad batteria sotto il modulo. Per PCBA, controllare in anteprima orientamento, componenti e montaggio.
 
-[Scarica il pacchetto ordine Rev.G / D2.1](hardware/prototipi/revg-d2/Paky76-RevG-D2.1-Pacchetto-Ordine.zip) con i file per PCBWay Turnkey e JLCPCB, più manuale e datasheet aggiornati.
+## Cablaggio e alimentazione
 
-La scheda principale e il pannello comandi si caricano come due PCB distinti. La scheda principale richiede Standard PCBA su entrambi i lati per montare lo slot microSD, anche scegliendo di saldare a mano il portapila. Il pannello si assembla sul lato Top. Prima di confermare la produzione, verificare disponibilità, orientamento dei componenti nel render CAM e pannellizzazione con JLCPCB.
+**J1 principale ↔ J1 frontale**, pin per pin. 1 GND, 2 3V3, 3 SDA/GPIO5, 4 SCL/GPIO6, 5 SW1/GPIO2, 6 SW2/GPIO1. I pulsanti sono attivi bassi.
 
-## Archivio revisioni
+| J2 frontale | Funzione | Pin OLED secondo il disegno |
+| ---: | --- | ---: |
+| 1 | GND | 2 |
+| 2 | 3V3 verso VCC | 1 |
+| 3 | SDA | 4 |
+| 4 | SCL | 3 |
 
-- [Rev.F / D1](hardware/prototipi/revf-d1/LEGGIMI-PRIMA.md)
+Il testo commerciale e il disegno OLED riportano numerazioni di alimentazione diverse. **Seguire le serigrafie sul modulo ricevuto e collegare per segnale.** Passo JST SH 1,0 mm; lato OLED 2,54 mm. Vedere il [pinout](Cablaggio/Pinout-OLED-SH1107.md).
 
-### Rev.D / D1
+Il **J2 della principale** porta il positivo LiPo sul pin 1 VBAT attraverso S1 e il negativo diretto sul pin 2 GND. La prima accensione si fa via USB con batteria scollegata. Per ricaricare, portare S1 su ON. Per togliere tutta l'alimentazione, mettere S1 su OFF e scollegare USB-C.
 
+## Scocca, montaggio e firmware
 
-| Risorsa | Contenuto |
-| --- | --- |
-| [Istruzioni del prototipo](hardware/prototipi/revd-d1/LEGGIMI-PRIMA.md) | Stato della revisione, caricamento JLCPCB e stampa |
-| [Schema, PCB e file JLCPCB](hardware/prototipi/revd-d1/PCB-RevD/) | KiCad, Gerber, BOM, CPL, report ERC/DRC e cablaggio |
-| [File di stampa 3D](hardware/prototipi/revd-d1/Stampa-3D/) | OpenSCAD e STL |
-| [Datasheet PDF](hardware/prototipi/revd-d1/Paky76-Datasheet-RevD-D1.pdf) | Specifiche, alimentazione, pinout e stato di validazione |
-| [Manuale di assemblaggio PDF](hardware/prototipi/revd-d1/Paky76-Manuale-Assemblaggio-D1.pdf) | Sequenza di montaggio, cablaggio e viste CAD |
-| [Specifiche RTC e pannello](hardware/prototipi/revd-d1/Specifiche/) | Requisiti e collegamenti previsti per la prossima revisione |
-| [Pacchetto completo Rev.D / D1](hardware/prototipi/revd-d1/Paky76-Pacchetto-Prototipo-RevD-D1.zip) | Tutti i file del prototipo in un archivio |
+1. La scocca misura **49 × 54 × 41,6 mm**, escluse le sporgenze, e **61,5 mm** in lunghezza con occhiello. Finestra **30,4 × 30,4 mm**, centrata 3 mm verso USB-C nel CAD. Interasse nominale di fissaggio OLED **29 × 42 mm**, da confrontare con il campione.
+2. In Cura importare gli [STL A5](Meccanica/) al 100%. Stampare un guscio, una cornice e due copritasti. Confrontare la dima OLED con il modulo reale prima della stampa definitiva. Il sorgente OpenSCAD è nella stessa cartella.
+3. Installare S1 e la principale con USB-C opposta all'occhiello. Verificare a secco ripiano, batteria, frontale, copritasti e OLED. Montare secondo le figure, con il vetro verso la finestra e J2 del frontale verso USB-C.
+4. Installare il core esp32 di Espressif e U8g2 in Arduino IDE, selezionare XIAO_ESP32S3 e usare lo [sketch A5](Firmware/Paky76MiniSH1107/Paky76MiniSH1107.ino). Il firmware cerca 0x3C e 0x3D a 100 kHz, anima il volto e risveglia il display con uno dei tasti dopo lo spegnimento per inattività. Monitor seriale a 115200 baud.
+5. Verificare display, tasti e continuità prima di collegare la LiPo. Sul campione controllare passaggio dei cavi, assenza di compressione sulla cella, ricarica e temperatura con la scocca chiusa.
+
+## Stato delle prove
+
+I [rapporti](Verifiche/) registrano l'identità byte per byte delle PCB e dei file JLCPCB con la A4.1, il controllo delle mesh STL e la simulazione host della logica firmware. **Compilazione per la XIAO e collaudo fisico restano da eseguire.** Le quote di montaggio OLED e la corsa dei copritasti vanno verificate sul primo campione.

@@ -1,7 +1,0 @@
-Verifica incrociata delle netlist KiCad.
-J1: 6 linee corrispondenti pin per pin tra le schede.
-J2 frontale: 4 linee OLED, corrispondenti a GND, 3V3, SDA, SCL.
-J2 principale: VBAT e GND fino a U1 pin 15/16.
-SW1 e SW2: linea indipendente e chiusura a massa; U1 D1 e D0 rispettivamente.
-Tutti i Gerber, BOM e CPL sono identici ai file A4.
-Cablaggi esterni, display e selettore: verifica sul campione.

@@ -1,2 +1,0 @@
-Quote Gerber 43 × 42 mm; forature {'PTH': 10, 'NPTH': 4}; riferimenti SMT Top J1, J2, SW1, SW2; BOM e CPL coerenti.
-Rotazioni e disponibilità da confermare nel preventivo JLCPCB.

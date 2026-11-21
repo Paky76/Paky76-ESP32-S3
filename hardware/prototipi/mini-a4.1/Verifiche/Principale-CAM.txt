@@ -1,1 +1,0 @@
-Gerber: 32 × 39 mm. Fori {'PTH': 13, 'NPTH': 4}. BOM/CPL: U1, J1, R1, R2, tutti Top. U1: centro corpo 100,000 / -91,450 mm; porta USB-C verso bordo corto y=80,50 mm in KiCad. Rotazione da controllare nel viewer JLCPCB.
