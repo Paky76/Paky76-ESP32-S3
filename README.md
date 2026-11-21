@@ -9,6 +9,8 @@ Dispositivo portatile con due tasti laterali e un volto animato su **OLED SH1107
 | Documento | Contenuto |
 | --- | --- |
 | [Manuale illustrato PDF](Documentazione/Paky76-Mini-A5-Manuale-Assemblaggio.pdf) | Stampa, montaggio, orientamento e collaudo |
+| [Schema elettrico A3 · pagina unica](Documentazione/Paky76-Mini-A5-Schema-Elettrico.pdf) | Simboli elettrici, alimentazione, pull-up, pulsanti e OLED |
+| [Tavola di cablaggio A3](Documentazione/Paky76-Mini-A5-Schema-Cablaggio-Completo.pdf) | Cablaggio tra i moduli con pin e segnali numerati |
 | [Schemi di collegamento PDF](Documentazione/Paky76-Mini-A5-Schemi-Collegamento.pdf) | PCB, OLED, interruttore e batteria |
 | [Datasheet PDF](Documentazione/Paky76-Mini-A5-Datasheet.pdf) | Specifiche e tavole quotate |
 | [Figure e quote](Documentazione/Figure/) | Esploso, guscio, cornice, finestra, fori OLED e profilo |

@@ -5,6 +5,8 @@
 ## Documentazione A5
 
 - [Manuale illustrato](Documentazione/Paky76-Mini-A5-Manuale-Assemblaggio.pdf)
+- [Schema elettrico a simboli, pagina unica A3](Documentazione/Paky76-Mini-A5-Schema-Elettrico.pdf)
+- [Tavola di cablaggio, pagina unica A3](Documentazione/Paky76-Mini-A5-Schema-Cablaggio-Completo.pdf)
 - [Schemi di collegamento](Documentazione/Paky76-Mini-A5-Schemi-Collegamento.pdf)
 - [Datasheet tecnico](Documentazione/Paky76-Mini-A5-Datasheet.pdf)
 - [Viste CAD e tavole quotate](Documentazione/Figure/)

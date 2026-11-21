@@ -12,3 +12,5 @@ Alimentare dal J2 del frontale a 3,3 V. Cablaggio secondo il disegno del vendito
 Controllare le serigrafie del campione prima di collegarlo: il testo commerciale riporta anche «pin 2 VDD». Collegare per funzione. J2 frontale è JST SH passo 1,0 mm, mentre il lato OLED è passo 2,54 mm. Effettuare la prima prova via USB-C con la batteria scollegata.
 
 Vedere gli [schemi PDF](../Documentazione/Paky76-Mini-A5-Schemi-Collegamento.pdf) per J1 e batteria.
+
+Per la vista d’insieme, consultare lo [schema elettrico A3](../Documentazione/Paky76-Mini-A5-Schema-Elettrico.pdf) e la [tavola di cablaggio A3](../Documentazione/Paky76-Mini-A5-Schema-Cablaggio-Completo.pdf).
