@@ -1,0 +1,6 @@
+cell_gauge.stl: mesh chiusa.
+front_gauge.stl: mesh chiusa.
+main_gauge.stl: mesh chiusa.
+switch_gauge.stl: mesh chiusa.
+tray.stl: mesh chiusa.
+Separazioni nominali in Z: PCB/interruttore 0,8 mm, interruttore/dima cella 0,8 mm, dima cella/frontale 1,8 mm. Quote calcolate sul modello, cablaggio da provare.

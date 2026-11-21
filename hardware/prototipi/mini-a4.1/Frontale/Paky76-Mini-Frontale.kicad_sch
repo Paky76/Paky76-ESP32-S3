@@ -1,0 +1,727 @@
+(kicad_sch (version 20250114) (generator eeschema) (uuid "5bf29406-189d-4751-bd4d-41987a2b56e6") (paper "A4") (lib_symbols (symbol "Connector_Generic:Conn_01x06"
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "J"
+			(at 0 7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x06"
+			(at 0 -10.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_keywords" "connector"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_fp_filters" "Connector*:*_1x??_*"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "Conn_01x06_1_1"
+			(rectangle
+				(start -1.27 6.35)
+				(end 1.27 -8.89)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+			(rectangle
+				(start -1.27 5.207)
+				(end 0 4.953)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 2.667)
+				(end 0 2.413)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 0.127)
+				(end 0 -0.127)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -2.413)
+				(end 0 -2.667)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -4.953)
+				(end 0 -5.207)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -7.493)
+				(end 0 -7.747)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(pin passive line
+				(at -5.08 5.08 0)
+				(length 3.81)
+				(name "Pin_1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 2.54 0)
+				(length 3.81)
+				(name "Pin_2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 0 0)
+				(length 3.81)
+				(name "Pin_3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -2.54 0)
+				(length 3.81)
+				(name "Pin_4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -5.08 0)
+				(length 3.81)
+				(name "Pin_5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -7.62 0)
+				(length 3.81)
+				(name "Pin_6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "Connector_Generic:Conn_01x04"
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "J"
+			(at 0 5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 0 -7.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_keywords" "connector"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_fp_filters" "Connector*:*_1x??_*"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "Conn_01x04_1_1"
+			(rectangle
+				(start -1.27 3.81)
+				(end 1.27 -6.35)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+			(rectangle
+				(start -1.27 2.667)
+				(end 0 2.413)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 0.127)
+				(end 0 -0.127)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -2.413)
+				(end 0 -2.667)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(rectangle
+				(start -1.27 -4.953)
+				(end 0 -5.207)
+				(stroke
+					(width 0.1524)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(pin passive line
+				(at -5.08 2.54 0)
+				(length 3.81)
+				(name "Pin_1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 0 0)
+				(length 3.81)
+				(name "Pin_2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -2.54 0)
+				(length 3.81)
+				(name "Pin_3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at -5.08 -5.08 0)
+				(length 3.81)
+				(name "Pin_4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "Switch:SW_Push"
+		(pin_numbers
+			(hide yes)
+		)
+		(pin_names
+			(offset 1.016)
+			(hide yes)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "SW"
+			(at 1.27 2.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SW_Push"
+			(at 0 -1.524 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_keywords" "switch normally-open pushbutton push-button"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "SW_Push_0_1"
+			(circle
+				(center -2.032 0)
+				(radius 0.508)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 0 1.27) (xy 0 3.048)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(circle
+				(center 2.032 0)
+				(radius 0.508)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 2.54 1.27) (xy -2.54 1.27)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(pin passive line
+				(at -5.08 0 0)
+				(length 2.54)
+				(name "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 5.08 0 180)
+				(length 2.54)
+				(name "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+(symbol "Mechanical:MountingHole"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(property "Reference" "H"
+			(at 0 5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 0 3.175 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_keywords" "mounting hole"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_fp_filters" "MountingHole*"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "MountingHole_0_1"
+			(circle
+				(center 0 0)
+				(radius 1.27)
+				(stroke
+					(width 1.27)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(embedded_fonts no)
+	))
+(symbol (lib_id "Connector_Generic:Conn_01x06") (at 106.67999999999999 76.2 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "02d3ecf4-d245-41f8-bb78-e97d2d552838") (property "Reference" "J1" (at 106.67999999999999 71.2 0) (effects (font (size 1.27 1.27)) )) (property "Value" "BM06B-SRSS-TB" (at 106.67999999999999 73.2 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "Connector_JST:JST_SH_BM06B-SRSS-TB_1x06-1MP_P1.00mm_Vertical" (at 106.67999999999999 76.2 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "J1") (unit 1)))))
+(symbol (lib_id "Connector_Generic:Conn_01x04") (at 165.1 76.2 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "b3e7de55-60e2-4c9c-a6e8-36fd924f8a5c") (property "Reference" "J2" (at 165.1 71.2 0) (effects (font (size 1.27 1.27)) )) (property "Value" "BM04B-SRSS-TB" (at 165.1 73.2 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "Connector_JST:JST_SH_BM04B-SRSS-TB_1x04-1MP_P1.00mm_Vertical" (at 165.1 76.2 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "J2") (unit 1)))))
+(symbol (lib_id "Switch:SW_Push") (at 104.14 106.67999999999999 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "f19eca2a-d61a-4f51-a6ab-008642a4dbef") (property "Reference" "SW1" (at 104.14 101.67999999999999 0) (effects (font (size 1.27 1.27)) )) (property "Value" "EVQP7A01P" (at 104.14 103.67999999999999 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "Button_Switch_SMD:SW_SPST_EVQP7A" (at 104.14 106.67999999999999 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "SW1") (unit 1)))))
+(symbol (lib_id "Switch:SW_Push") (at 104.14 116.83999999999999 0) (unit 1) (in_bom yes) (on_board yes) (dnp no) (uuid "be83886e-3700-4d04-90ff-7f11f2000d7d") (property "Reference" "SW2" (at 104.14 111.83999999999999 0) (effects (font (size 1.27 1.27)) )) (property "Value" "EVQP7A01P" (at 104.14 113.83999999999999 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "Button_Switch_SMD:SW_SPST_EVQP7A" (at 104.14 116.83999999999999 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "SW2") (unit 1)))))
+(symbol (lib_id "Mechanical:MountingHole") (at 109.22 144.78 0) (unit 1) (in_bom no) (on_board yes) (dnp no) (uuid "ef59c3ed-5281-48ec-b6ad-167c1efd52a5") (property "Reference" "H1" (at 109.22 139.78 0) (effects (font (size 1.27 1.27)) )) (property "Value" "MountingHole_2.2mm_M2" (at 109.22 141.78 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "MountingHole:MountingHole_2.2mm_M2" (at 109.22 144.78 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "H1") (unit 1)))))
+(symbol (lib_id "Mechanical:MountingHole") (at 129.54 144.78 0) (unit 1) (in_bom no) (on_board yes) (dnp no) (uuid "59392afd-db1c-4900-bf35-89cdee8fba3f") (property "Reference" "H2" (at 129.54 139.78 0) (effects (font (size 1.27 1.27)) )) (property "Value" "MountingHole_2.2mm_M2" (at 129.54 141.78 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "MountingHole:MountingHole_2.2mm_M2" (at 129.54 144.78 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "H2") (unit 1)))))
+(symbol (lib_id "Mechanical:MountingHole") (at 149.85999999999999 144.78 0) (unit 1) (in_bom no) (on_board yes) (dnp no) (uuid "7ff10f03-3eee-404c-aa55-78608fd20820") (property "Reference" "H3" (at 149.85999999999999 139.78 0) (effects (font (size 1.27 1.27)) )) (property "Value" "MountingHole_2.2mm_M2" (at 149.85999999999999 141.78 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "MountingHole:MountingHole_2.2mm_M2" (at 149.85999999999999 144.78 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "H3") (unit 1)))))
+(symbol (lib_id "Mechanical:MountingHole") (at 170.18 144.78 0) (unit 1) (in_bom no) (on_board yes) (dnp no) (uuid "f96d009a-dec6-418a-a484-89bd01f38039") (property "Reference" "H4" (at 170.18 139.78 0) (effects (font (size 1.27 1.27)) )) (property "Value" "MountingHole_2.2mm_M2" (at 170.18 141.78 0) (effects (font (size 1.27 1.27)) )) (property "Footprint" "MountingHole:MountingHole_2.2mm_M2" (at 170.18 144.78 0) (effects (font (size 1.27 1.27)) (hide yes))) (instances (project "Paky76-Mini-Frontale" (path "/5bf29406-189d-4751-bd4d-41987a2b56e6" (reference "H4") (unit 1)))))
+(wire (pts (xy 81.28 71.12) (xy 101.6 71.12)) (stroke (width 0) (type default)) (uuid "791a7dcb-881f-47ca-96bc-4439786e8853"))
+(wire (pts (xy 81.28 73.66) (xy 101.6 73.66)) (stroke (width 0) (type default)) (uuid "114215ec-cb46-4971-be60-19946abad5b9"))
+(wire (pts (xy 81.28 76.2) (xy 101.6 76.2)) (stroke (width 0) (type default)) (uuid "532fb96e-bbd9-44a2-8590-5dff61838d37"))
+(wire (pts (xy 81.28 78.74) (xy 101.6 78.74)) (stroke (width 0) (type default)) (uuid "9791847c-d457-4084-8d3b-0fb4b2335093"))
+(wire (pts (xy 81.28 81.28) (xy 101.6 81.28)) (stroke (width 0) (type default)) (uuid "11dd5826-db1f-413c-95cc-4142618dfb4a"))
+(wire (pts (xy 81.28 83.82) (xy 101.6 83.82)) (stroke (width 0) (type default)) (uuid "e01f7eb9-bdf4-48c2-9c87-37529bab7c45"))
+(wire (pts (xy 139.7 73.66) (xy 160.02 73.66)) (stroke (width 0) (type default)) (uuid "8ed95c9f-b165-494b-894a-ade8b0dad695"))
+(wire (pts (xy 139.7 76.2) (xy 160.02 76.2)) (stroke (width 0) (type default)) (uuid "f506d84f-1b3c-4b70-b954-5d098e3a641a"))
+(wire (pts (xy 139.7 78.74) (xy 160.02 78.74)) (stroke (width 0) (type default)) (uuid "f0ed0208-7b4e-4a05-a8cd-5ee6e29d244e"))
+(wire (pts (xy 139.7 81.28) (xy 160.02 81.28)) (stroke (width 0) (type default)) (uuid "b6ca0a53-ff73-463b-b9c4-6628a84fdeb7"))
+(wire (pts (xy 81.28 106.68) (xy 99.06 106.68)) (stroke (width 0) (type default)) (uuid "2b6184c9-bf20-4369-ab77-650157a5b7e7"))
+(wire (pts (xy 109.22 106.68) (xy 129.54 106.68)) (stroke (width 0) (type default)) (uuid "b58dd536-46f4-4b60-bcc6-3bc0acce977f"))
+(wire (pts (xy 81.28 116.84) (xy 99.06 116.84)) (stroke (width 0) (type default)) (uuid "631e034e-fee0-498d-8943-30e058c951f9"))
+(wire (pts (xy 109.22 116.84) (xy 129.54 116.84)) (stroke (width 0) (type default)) (uuid "6276317e-185e-4469-adb5-187c18d41c0d"))
+(label "GND" (at 81.28 71.11999999999999 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "047d2ed5-1108-42dd-bc24-74cfb3da7f36"))
+(label "3V3" (at 81.28 73.66 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "2770e5de-766f-49e1-9797-e900be7240f5"))
+(label "SDA" (at 81.28 76.2 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "de04e804-0078-4e1c-ae64-ca32378bb7bf"))
+(label "SCL" (at 81.28 78.74 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "90d6d1ea-c1c7-4348-ae71-d84f24f87ee7"))
+(label "LEFT_N" (at 81.28 81.28 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "dbaaf1e9-7c42-44c5-a01a-7cbbf6a2e713"))
+(label "RIGHT_N" (at 81.28 83.82 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "50fb47f1-2c26-4602-a54c-32075b8ce992"))
+(label "GND" (at 139.7 73.66 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "8407f647-1e6e-4a6f-aeed-025e8c3e2e22"))
+(label "3V3" (at 139.7 76.2 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "bd2bd81f-ca37-46de-a6be-18a9f26da3a2"))
+(label "SDA" (at 139.7 78.74 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "136198a7-624d-4eee-9b7f-38ddc6ea1d1b"))
+(label "SCL" (at 139.7 81.28 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "aa61301c-a06b-45c3-bc14-b115b9bd931f"))
+(label "LEFT_N" (at 81.28 106.67999999999999 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "7821f863-4885-44f8-8c22-5e0584635315"))
+(label "GND" (at 129.54 106.67999999999999 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "2e904450-936f-42e4-994a-1882f7a5f03d"))
+(label "RIGHT_N" (at 81.28 116.83999999999999 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "9a30d5c7-3584-4521-ab41-eddba9dbecb6"))
+(label "GND" (at 129.54 116.83999999999999 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "6c71525c-770d-4612-9c99-ae674432ed9a")))

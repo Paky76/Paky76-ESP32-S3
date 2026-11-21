@@ -1,0 +1,1 @@
+Simulazione host C++ superata: rilevamento OLED sul secondo indirizzo, associazione GPIO, tasto sinistro, tasto destro, entrambi, spegnimento display dopo inattività e riattivazione con tasto. Trasporto I²C e ingressi simulati; prova elettrica e montaggio su campione ancora da eseguire.

@@ -1,0 +1,5 @@
+(sym_lib_table (version 7)
+ (lib (name "Seeed")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Seeed.kicad_sym")(options "")(descr ""))
+ (lib (name "Connector_Generic")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Connector_Generic.kicad_sym")(options "")(descr ""))
+ (lib (name "Device")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Device.kicad_sym")(options "")(descr ""))
+ (lib (name "Mechanical")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Mechanical.kicad_sym")(options "")(descr "")))

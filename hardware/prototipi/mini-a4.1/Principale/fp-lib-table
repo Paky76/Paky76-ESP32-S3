@@ -1,0 +1,8 @@
+(fp_lib_table
+  (lib (name "Seeed")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Seeed.pretty")(options "")(descr ""))
+  (version 7)
+  (lib (name "Connector_JST")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Connector_JST.pretty")(options "")(descr ""))
+  (lib (name "Resistor_SMD")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Resistor_SMD.pretty")(options "")(descr ""))
+  (lib (name "Connector_PinHeader_2.54mm")(type "KiCad")(uri "${KIPRJMOD}/Librerie/Connector_PinHeader_2.54mm.pretty")(options "")(descr ""))
+  (lib (name "MountingHole")(type "KiCad")(uri "${KIPRJMOD}/Librerie/MountingHole.pretty")(options "")(descr ""))
+)
